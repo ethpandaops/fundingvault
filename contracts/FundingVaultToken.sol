@@ -8,7 +8,7 @@ import "./IFundingVault.sol";
 contract FundingVaultToken is ERC721Enumerable, IFundingVaultToken {
   address private _fundingVault;
 
-  constructor(address fundingVault) ERC721("FundingVault Grant", "FVGrant") {
+  constructor(address fundingVault) ERC721("FundingVault Grant", "Funding Grant") {
     _fundingVault = fundingVault;
   }
 

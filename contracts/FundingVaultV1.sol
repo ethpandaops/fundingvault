@@ -58,7 +58,6 @@ contract FundingVaultV1 is
     require(_reentrancyStatus == 0 && _grantIdCounter == 0, "already initialized");
     require(_manager == _msgSender(), "access denied");
     _grantRole(DEFAULT_ADMIN_ROLE, _manager);
-    _grantRole(GRANT_MANAGER_ROLE, _manager);
     _reentrancyStatus = 1;
     _vaultTokenAddr = tokenAddr;
     _grantIdCounter = 1;
