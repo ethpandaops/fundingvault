@@ -1,6 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.21;
 
+/*
+##################################################################
+#                Holešovice Funding Vault                        #
+#                                                                #
+# This contract is used to distribute fund reserves to faucets   #
+# or other projects that have a ongoing need for testnet funds.  #
+#                                                                #
+#  Vault contract:  0x610866c6089768dA95524bcc4cE7dB61eDa3931c   #
+#                                                                #
+# see https://dev.pk910.de/ethvault               by pk910.eth   #
+##################################################################
+*/
+
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "./ReentrancyGuard.sol";
@@ -85,6 +98,10 @@ contract FundingVaultV1 is
     } else {
       _unpause();
     }
+  }
+
+  function setProxyManager(address manager) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    _manager = manager;
   }
 
   function setClaimTransferLockTime(uint32 lockTime) public onlyRole(DEFAULT_ADMIN_ROLE) {
