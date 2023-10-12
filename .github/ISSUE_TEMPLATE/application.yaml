@@ -1,0 +1,86 @@
+name: Funding Request
+description: Apply for a holesky funding
+title: "Funding Request: <title>"
+labels: ["application"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out the funding request form!
+
+        Plese note that this funding request form is not intended for normal developers or small stakers.\
+        There are lots of faucets available that can properly cover your needs: [https://faucetlink.to/holesky](https://faucetlink.to/holesky)
+
+        If you're running a project that has an actual need for more funds, go ahead :)
+  - type: input
+    id: projectname
+    attributes:
+      label: Project Name
+      description: The name of your project that needs a funding
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Whats the link to your project?
+      description: Enter a link to your projects website or github profile.
+      placeholder: https://...
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        <b>Funding Methods</b>\
+        There are two possible funding methods:
+        * Ongoing Funding: \
+          Allowance to request the granted amount of funds from a contract whenever needed.
+        * One-Time Drop: \
+          A One-Time request for some amount of funds.
+        
+  - type: dropdown
+    id: interval
+    attributes:
+      label: Is this a one-time request or do you need an ongoing funding?
+      options:
+        - Please Select
+        - Ongoing Funding (monthly)
+        - One-Time Drop
+    validations:
+      required: true
+  - type: input
+    id: amount
+    attributes:
+      label: What amount of funds do you need?
+      description: |
+        The desired amount per month / total amount for one-time grant.
+        max. 20k for one-time drop, max. 10k per month for ongoing funding.
+        You should specify the amount of funds you actually need and not just ask for the max possible amount.
+    validations:
+      required: true
+  
+  - type: textarea
+    id: usage
+    attributes:
+      label: What do you need these funds for?
+      description: |
+        Tell us about your project and what you need the requested funds for. (min 50 words)
+        Just deploying or testing a few contracts is not a valid reason, as the existing faucets are probably sufficient to cover your needs.
+    validations:
+      required: true
+  - type: input
+    id: wallet
+    attributes:
+      label: Wallet Address
+      description: The address of the wallet the funds should go to.
+      placeholder: 0x...
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree that I will not sell testnet funds for money in any way.
+          required: true
+        - label: I agree that I will not hoard testnet funds with no actual need.
+          required: true
