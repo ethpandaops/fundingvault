@@ -53,7 +53,7 @@ body:
       label: What amount of funds do you need?
       description: |
         The desired amount per month / total amount for one-time grant.
-        max. 20k for one-time drop, max. 10k per month for ongoing funding.
+        max. 100k for one-time drop, max. 50k per month for ongoing funding.
         You should specify the amount of funds you actually need and not just ask for the max possible amount.
     validations:
       required: true
