@@ -275,8 +275,7 @@ contract FundingVaultV1 is
 
     if(!hasRole(DEFAULT_ADMIN_ROLE, _msgSender())) {
       _requireNotPaused();
-      // check if granted amount exceeds 
-      require(interval <= _managerLimitInterval, "interval exceeds manager limits");
+      // check if granted amount exceeds manager limits
       require(amount <= _managerLimitAmount, "amount exceeds manager limits");
       require(grantQuota <= managerQuota, "quota exceeds manager limits");
       require(_managerCooldown[_msgSender()] < _getTime() + _managerGrantCooldownLock, "manager cooldown");
@@ -309,8 +308,7 @@ contract FundingVaultV1 is
 
     if(!hasRole(DEFAULT_ADMIN_ROLE, _msgSender())) {
       _requireNotPaused();
-      // check if granted amount exceeds 
-      require(interval <= _managerLimitInterval, "interval exceeds manager limits");
+      // check if granted amount exceeds manager limits
       require(amount <= _managerLimitAmount, "amount exceeds manager limits");
       require(newQuota <= managerQuota, "quota exceeds manager limits");
 
@@ -339,14 +337,15 @@ contract FundingVaultV1 is
 
     if(!hasRole(DEFAULT_ADMIN_ROLE, _msgSender())) {
       _requireNotPaused();
-      // check if grant quota exceeds manager limit
+      // check if grant quota exceeds manager limits
+      require(_grants[grantId].claimLimit <= _managerLimitAmount, "quota exceeds manager limits");
       require(grantQuota <= managerQuota, "quota exceeds manager limits");
       require(_managerCooldown[_msgSender()] < _getTime() + _managerGrantCooldownLock, "manager cooldown");
     }
     if(_managerCooldown[_msgSender()] < _getTime()) {
       _managerCooldown[_msgSender()] = _getTime();
     }
-    _managerCooldown[_msgSender()] += uint64(_managerGrantCooldown * grantQuota / managerQuota);
+    _managerCooldown[_msgSender()] += uint64(_managerGrantCooldown * grantQuota / managerQuota) + 1;
 
     IFundingVaultToken(_vaultTokenAddr).tokenUpdate(grantId, addr);
   }

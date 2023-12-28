@@ -372,19 +372,19 @@ describe("Funding Vault Tests", function () {
 			await proxiedVault.connect(manager).transferGrant(1, grantee2.getAddress());
 
 			// check manager cooldown
-			expect(await proxiedVault.getManagerCooldown(manager.getAddress())).to.equal(359);
+			expect(await proxiedVault.getManagerCooldown(manager.getAddress())).to.equal(360);
 
 			// transfer grant (100 ETH per hour)
 			await proxiedVault.connect(manager).transferGrant(2, grantee2.getAddress());
 
 			// check manager cooldown
-			expect(await proxiedVault.getManagerCooldown(manager.getAddress())).to.equal(718);
+			expect(await proxiedVault.getManagerCooldown(manager.getAddress())).to.equal(720);
 
 			// transfer grant (1000 ETH per hour)
 			await proxiedVault.connect(manager).transferGrant(3, grantee2.getAddress());
 
 			// check manager cooldown
-			expect(await proxiedVault.getManagerCooldown(manager.getAddress())).to.equal(4318);
+			expect(await proxiedVault.getManagerCooldown(manager.getAddress())).to.equal(4321);
 
 			// transfer grant (1000 ETH per hour), should fail
 			var txErr = null;
@@ -395,14 +395,14 @@ describe("Funding Vault Tests", function () {
 			}
 			expect(txErr?.toString()).to.match(/manager cooldown/);
 
-			// "wait" 2519 sec (4318 - 1800) + 1
-			await time.increase(2519);
+			// "wait" 2522 sec (4321 - 1800) + 1
+			await time.increase(2522);
 
 			// transfer grant (1000 ETH per hour)
 			await proxiedVault.connect(manager).transferGrant(4, grantee2.getAddress());
 
 			// check manager cooldown
-			expect(await proxiedVault.getManagerCooldown(manager.getAddress())).to.equal(5399);
+			expect(await proxiedVault.getManagerCooldown(manager.getAddress())).to.equal(5400);
 		});
 		
 	});
