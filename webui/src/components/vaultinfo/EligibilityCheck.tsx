@@ -48,16 +48,16 @@ const EligibilityCheck = (): React.ReactElement => {
       <div className="alert alert-danger">Failed checking eligibility: {tokenBalance.error.message}</div>
     )
   }
-  if(firstTokenId.isError) {
-    return (
-      <div className="alert alert-danger">Failed checking eligibility: {firstTokenId.error.message}</div>
-    )
-  }
   if(tokenBalance.data == 0) {
     return (
       <div>
         Sorry, your wallet ({address}) is not authorized to request funds from the FundingVault.
       </div>
+    )
+  }
+  if(firstTokenId.isError) {
+    return (
+      <div className="alert alert-danger">Failed checking eligibility: {firstTokenId.error.message}</div>
     )
   }
   
