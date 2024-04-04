@@ -1,0 +1,57 @@
+
+#root {
+  height: 100vh;
+}
+
+.foreground-container {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+
+  top: 0;
+  left: 0;
+
+  pointer-events: all;
+
+  overflow-y: auto;
+  word-break: wrap;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-wrapper {
+  text-align: center;
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-header {
+  display: flex;
+  min-height: 64px;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
+.page-footer {
+  display: flex;
+  min-height: 64px;
+  justify-content: center;
+  padding: 12px;
+}
+
+.page-block {
+  background-color: rgba(240, 248, 255, .7);
+  border-radius: .375rem;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .1);
+  text-align: left;
+  padding: 12px;
+  width: 90%;
+  max-width: 600px;
+  min-height: 200px;
+}

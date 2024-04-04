@@ -1,0 +1,16 @@
+
+.details-table .prop {
+    width: 200px;
+}
+
+.claim-form {
+    margin-top: 20px;
+}
+
+.claim-form .claim-button {
+    width: 100%;
+}
+
+.claim-form .txhash {
+    font-size: 0.8em;
+}
