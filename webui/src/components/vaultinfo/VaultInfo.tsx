@@ -22,7 +22,8 @@ const VaultInfo = (): React.ReactElement => {
       </p>
       {isConnected && chain ?
       <EligibilityCheck /> : null}
-      {!isConnected ? !chain ?  renderInvalidNetwork() : renderDisconnected() : null}
+      {!isConnected ? renderDisconnected() : null}
+      {isConnected && !chain ?  renderInvalidNetwork() : null}
 
     </div>
   )

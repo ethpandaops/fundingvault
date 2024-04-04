@@ -57,6 +57,9 @@ const ClaimForm = (props: { grantId: number }): React.ReactElement => {
   }, []);
   
   let maxAmount = toDecimalUnit(claimableBalance.data as bigint, chain?.nativeCurrency.decimals);
+  if(isNaN(maxAmount)) {
+    maxAmount = 0;
+  }
   maxAmount = Math.round(maxAmount * 1000) / 1000;
 
   if(parseInt(claimAmount) > maxAmount) {
