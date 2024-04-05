@@ -11,10 +11,12 @@ export interface ChainConfig {
 }
 
 export interface Config {
+	AppVersion: string;
 	Chains: ChainConfig[];
 }
 
 const FundingVaultConfig: Config = {
+	AppVersion: process.env.REACT_APP_GIT_VERSION as string,
 	Chains: [
 		{
 			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
