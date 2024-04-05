@@ -19,8 +19,8 @@ import Background from "./components/background/Background";
 import VaultInfo from './components/vaultinfo/VaultInfo';
 
 const config = getDefaultConfig({
-  appName: 'RainbowKit demo',
-  projectId: 'YOUR_PROJECT_ID',
+  appName: 'FundingVault',
+  projectId: '4b8923523ec77b9be8ab9fd4ff539b48',
   chains: [
     holesky,
     sepolia,
