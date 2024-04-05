@@ -105,5 +105,5 @@ Cargo.lock
 .vscode/
 *.code-workspace
 
-artifacts/
-cache/
+artifacts
+cache
