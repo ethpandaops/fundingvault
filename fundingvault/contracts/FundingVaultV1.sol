@@ -48,6 +48,12 @@ contract FundingVaultStorage {
 
   // slot 0x09
   mapping(address => uint64) internal _managerCooldown;
+
+  // slot 0x0a
+  mapping(uint64 => uint256) internal _grantTotalClaimed;
+
+  // slot 0x0b
+  mapping(uint64 => bytes32) internal _grantNames;
 }
 
 contract FundingVaultV1 is 
@@ -55,7 +61,7 @@ contract FundingVaultV1 is
   AccessControl,            // 0x02
   Pausable,                 // 0x03
   ReentrancyGuard,          // 0x04
-  FundingVaultStorage,      // 0x05 - 0x09
+  FundingVaultStorage,      // 0x05 - 0x0b
   IFundingVault
 {
   bytes32 public constant GRANT_MANAGER_ROLE = keccak256("GRANT_MANAGER_ROLE");
@@ -227,6 +233,15 @@ contract FundingVaultV1 is
     return _grants[grantId];
   }
 
+  function getGrantName(uint64 grantId) public view returns (bytes32) {
+    require(_grants[grantId].claimTime > 0, "grant not found");
+    return _grantNames[grantId];
+  }
+
+  function getGrantTotalClaimed(uint64 grantId) public view returns (uint256) {
+    return _grantTotalClaimed[grantId];
+  }
+
   function getGrantLockTime(uint32 grantId) public view returns (uint64) {
     require(_grants[grantId].claimTime > 0, "grant not found");
     if(_grantClaimLock[grantId] > uint64(block.timestamp)) {
@@ -266,9 +281,18 @@ contract FundingVaultV1 is
     return _managerCooldown[manager] - _getTime();
   }
 
+  function getManagerGrantLimits() public view returns (uint128, uint64, uint32, uint32) {
+    return (
+      _managerLimitAmount,
+      _managerLimitInterval,
+      _managerGrantCooldown,
+      _managerGrantCooldownLock
+    );
+  }
+
   //## Grant managemnet functions (Grant Manager)
 
-  function createGrant(address addr, uint128 amount, uint64 interval) public onlyRole(GRANT_MANAGER_ROLE) nonReentrant {
+  function createGrant(address addr, uint128 amount, uint64 interval, bytes32 name) public onlyRole(GRANT_MANAGER_ROLE) nonReentrant {
     require(amount > 0 && interval > 0, "invalid grant");
     uint256 grantQuota = uint256(amount) * 1 ether / interval;
     uint256 managerQuota = uint256(_managerLimitAmount) * 1 ether / _managerLimitInterval;
@@ -292,6 +316,7 @@ contract FundingVaultV1 is
       claimLimit: amount,
       dustBalance: 0
     });
+    _grantNames[grantId] = name;
     IFundingVaultToken(_vaultTokenAddr).tokenUpdate(grantId, addr);
 
     emit GrantUpdate(grantId, amount, interval);
@@ -359,6 +384,16 @@ contract FundingVaultV1 is
 
     IFundingVaultToken(_vaultTokenAddr).tokenUpdate(grantId, address(0));
     delete _grants[grantId];
+  }
+
+  function renameGrant(uint64 grantId, bytes32 name) public onlyRole(GRANT_MANAGER_ROLE) nonReentrant {
+    require(_grants[grantId].claimTime > 0, "grant not found");
+
+    if(!hasRole(DEFAULT_ADMIN_ROLE, _msgSender())) {
+      _requireNotPaused();
+    }
+
+    _grantNames[grantId] = name;
   }
 
   function lockGrant(uint64 grantId, uint64 lockTime) public nonReentrant {
@@ -475,6 +510,7 @@ contract FundingVaultV1 is
     // update grant struct
     _grants[grantId].claimTime = newClaimTime;
     _grants[grantId].dustBalance = newDustBalance;
+    _grantTotalClaimed[grantId] += claimAmount;
 
     // send claim amount to target
     (bool sent, ) = payable(target).call{value: claimAmount}("");
