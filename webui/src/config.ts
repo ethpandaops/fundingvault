@@ -12,11 +12,13 @@ export interface ChainConfig {
 
 export interface Config {
 	AppVersion: string;
+	ManagerRole: string;
 	Chains: ChainConfig[];
 }
 
 const FundingVaultConfig: Config = {
 	AppVersion: process.env.REACT_APP_GIT_VERSION as string,
+	ManagerRole: "0xc7386e23c63a3088d7d0389761b7b890e58c103e1a12376eb26d3a4a04e2641b",
 	Chains: [
 		{
 			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
@@ -24,7 +26,7 @@ const FundingVaultConfig: Config = {
             TokenName: "HolETH",
 			Chain: holesky,
 			HumanNetworkName: "Holesky",
-			BlockExplorerUrl: "https://holesky.etherscan.io/tx/",
+			BlockExplorerUrl: "https://holesky.etherscan.io/",
 		},
 		{
 			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
@@ -32,7 +34,7 @@ const FundingVaultConfig: Config = {
             TokenName: "SepETH",
 			Chain: sepolia,
 			HumanNetworkName: "Sepolia",
-			BlockExplorerUrl: "https://sepolia.etherscan.io/tx/",
+			BlockExplorerUrl: "https://sepolia.etherscan.io/",
 		},
 	],
 };

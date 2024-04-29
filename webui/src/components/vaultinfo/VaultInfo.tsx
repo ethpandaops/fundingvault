@@ -1,11 +1,9 @@
 import {
 	useAccount,
-  useReadContract,
 } from "wagmi";
 import {
   useConnectModal,
 } from '@rainbow-me/rainbowkit';
-import ClaimForm from "./ClaimForm";
 import EligibilityCheck from "./EligibilityCheck";
 
 
@@ -24,7 +22,6 @@ const VaultInfo = (): React.ReactElement => {
       <EligibilityCheck /> : null}
       {!isConnected ? renderDisconnected() : null}
       {isConnected && !chain ?  renderInvalidNetwork() : null}
-
     </div>
   )
 
