@@ -299,6 +299,14 @@ contract FundingVaultV1 is
 
     if(!hasRole(DEFAULT_ADMIN_ROLE, _msgSender())) {
       _requireNotPaused();
+
+      if(interval > _managerLimitInterval) {
+        // special case, if a grant with an interval bigger than the manager limit interval is created
+        // increase the grantQuota as if the grant would have been created with the manager limit interval
+        // this avoids managers from exploiting the contract by creating multiple grants with extremely high intervals
+        grantQuota = uint256(amount) * 1 ether / _managerLimitInterval;
+      }
+
       // check if granted amount exceeds manager limits
       require(amount <= _managerLimitAmount, "amount exceeds manager limits");
       require(grantQuota <= managerQuota, "quota exceeds manager limits");
