@@ -221,7 +221,7 @@ contract FundingVaultV1 is
     IFundingVaultToken vaultToken = IFundingVaultToken(_vaultTokenAddr);
     uint64 grantCount = uint64(vaultToken.totalSupply());
     Grant[] memory grants = new Grant[](grantCount);
-    for(uint64 grantIdx = 0; grantIdx < grantCount; grantIdx++) {
+    for(uint256 grantIdx = 0; grantIdx < grantCount; grantIdx++) {
       uint64 grantId = uint64(vaultToken.tokenByIndex(grantIdx));
       grants[grantIdx] = _grants[grantId];
     }
