@@ -16,6 +16,7 @@ import {
 } from 'wagmi/chains';
 
 import VaultPage from './components/VaultPage';
+import { ephemery } from './config';
 
 const config = getDefaultConfig({
   appName: 'FundingVault',
@@ -23,6 +24,7 @@ const config = getDefaultConfig({
   chains: [
     holesky,
     sepolia,
+    ephemery,
   ],
 });
 
