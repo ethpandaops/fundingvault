@@ -17,8 +17,10 @@ export interface Config {
 	Chains: ChainConfig[];
 }
 
+const now = Math.floor((new Date()).getTime() / 1000);
+const iteration = Math.floor(((now - 1638471600) / 604800));
 export const ephemery = defineChain({
-	id: 39438125,
+	id: 39438000 + iteration,
 	name: 'Ephemery',
 	nativeCurrency: { name: 'Ephemery Ether', symbol: 'Eph', decimals: 18 },
 	rpcUrls: {
