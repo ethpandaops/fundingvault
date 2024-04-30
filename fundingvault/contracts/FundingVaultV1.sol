@@ -294,6 +294,7 @@ contract FundingVaultV1 is
 
   function createGrant(address addr, uint128 amount, uint64 interval, bytes32 name) public onlyRole(GRANT_MANAGER_ROLE) nonReentrant {
     require(amount > 0 && interval > 0, "invalid grant");
+    require(interval < _getTime(), "interval too big");
     uint256 grantQuota = uint256(amount) * 1 ether / interval;
     uint256 managerQuota = uint256(_managerLimitAmount) * 1 ether / _managerLimitInterval;
 
