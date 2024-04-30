@@ -219,7 +219,7 @@ contract FundingVaultV1 is
 
   function getGrants() public view returns (Grant[] memory) {
     IFundingVaultToken vaultToken = IFundingVaultToken(_vaultTokenAddr);
-    uint64 grantCount = uint64(vaultToken.totalSupply());
+    uint256 grantCount = vaultToken.totalSupply();
     Grant[] memory grants = new Grant[](grantCount);
     for(uint256 grantIdx = 0; grantIdx < grantCount; grantIdx++) {
       uint64 grantId = uint64(vaultToken.tokenByIndex(grantIdx));
