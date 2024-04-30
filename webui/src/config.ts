@@ -23,7 +23,7 @@ export const ephemery = defineChain({
 	nativeCurrency: { name: 'Ephemery Ether', symbol: 'Eph', decimals: 18 },
 	rpcUrls: {
 	  default: {
-		http: ['https://rpc.bordel.wtf/test'],
+		http: ['https://rpc.bordel.wtf/test', 'https://otter.bordel.wtf/erigon'],
 	  },
 	},
 	blockExplorers: {
@@ -71,9 +71,9 @@ const FundingVaultConfig: Config = {
 			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
             TokenContractAddr: "0x97652A83CC29043fA9Be2781cc0038EBa70de911",
             TokenName: "EphETH",
-			Chain: sepolia,
+			Chain: ephemery,
 			HumanNetworkName: "Ephmery",
-			BlockExplorerUrl: "https://explorer.ephemery.dev/tx/",
+			BlockExplorerUrl: "https://explorer.ephemery.dev/",
 		},
 	],
 };

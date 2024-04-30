@@ -177,7 +177,7 @@ const GrantCreate = (props: { closeFn?: () => void }): React.ReactElement => {
       abi: FundingVaultAbi,
       chainId: chainConfig.Chain.id,
       functionName: "createGrant",
-      args: [ addressInput, amountInput, intervalInput ],
+      args: [ addressInput, amountInput, intervalInput, hexName ],
     })
   }
   
