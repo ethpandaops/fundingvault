@@ -244,8 +244,8 @@ contract FundingVaultV1 is
 
   function getGrantLockTime(uint32 grantId) public view returns (uint64) {
     require(_grants[grantId].claimTime > 0, "grant not found");
-    if(_grantClaimLock[grantId] > uint64(block.timestamp)) {
-      return _grantClaimLock[grantId] - uint64(block.timestamp);
+    if(_grantClaimLock[grantId] > _getTime()) {
+      return _grantClaimLock[grantId] - _getTime();
     }
     else {
       return 0;
