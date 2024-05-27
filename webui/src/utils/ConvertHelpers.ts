@@ -85,7 +85,7 @@ export function toReadableDuration(duration: number | bigint, maxParts?: number)
   if(duration >= factor && (maxParts == 0 || parts < maxParts)) {
     let val = Math.floor(duration / factor);
     duration -= val * factor;
-    res += (res ? " " : "") + val + "min";
+    res += (res ? " " : "") + val + "sec";
     parts++;
   }
 

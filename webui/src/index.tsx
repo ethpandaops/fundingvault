@@ -16,16 +16,12 @@ import {
 } from 'wagmi/chains';
 
 import VaultPage from './components/VaultPage';
-import { ephemery } from './config';
+import { KnownChains } from './config';
 
 const config = getDefaultConfig({
   appName: 'FundingVault',
   projectId: '4b8923523ec77b9be8ab9fd4ff539b48',
-  chains: [
-    holesky,
-    sepolia,
-    ephemery,
-  ],
+  chains: KnownChains as any,
 });
 
 const root = ReactDOM.createRoot(

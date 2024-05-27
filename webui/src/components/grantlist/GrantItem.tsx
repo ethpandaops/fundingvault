@@ -12,6 +12,9 @@ import { toBigintUnit, toDecimalUnit, toReadableAmount, toReadableDuration } fro
 import { isAddress } from "ethers";
 import GrantRename from "../grant_rename/GrantRename";
 import GrantUpdate from "../grant_update/GrantUpdate";
+import GrantLock from "../grant_lock/GrantLock";
+import GrantTransfer from "../grant_transfer/GrantTransfer";
+import GrantDelete from "../grant_delete/GrantDelete";
 
 export interface IGrantItemProps {
   tokenIdx: number
@@ -141,6 +144,55 @@ const GrantItem = (props: IGrantItemProps): React.ReactElement => {
       </td>
       <td>{toReadableAmount(claimableBalanceCall.data as bigint, chain?.nativeCurrency.decimals, chainConfig.TokenName, 3)}</td>
       <td>{toReadableAmount(totalClaimedCall.data as bigint, chain?.nativeCurrency.decimals, chainConfig.TokenName, 3)}</td>
+      <td>
+        <a href="#" className="mx-1 grant-lock-btn" onClick={(evt) => {
+          evt.preventDefault();
+          if(!tokenIdCall.isFetched)
+            return;
+
+          props.setDialog((
+            <GrantLock 
+              grantId={parseInt(tokenIdCall.data?.toString())} 
+              name={grantName}
+              closeFn={() => { props.setDialog(null); }} 
+            />
+          ));
+        }}>
+          <i className="bi bi-lock-fill"></i>
+        </a>
+        <a href="#" className="mx-1 grant-transfer-btn" onClick={(evt) => {
+          evt.preventDefault();
+          if(!tokenIdCall.isFetched)
+            return;
+
+          props.setDialog((
+            <GrantTransfer 
+              grantId={parseInt(tokenIdCall.data?.toString())} 
+              name={grantName}
+              owner={ownerOfCall.data?.toString()}
+              closeFn={() => { props.setDialog(null); }} 
+            />
+          ));
+        }}>
+          <i className="bi bi-arrow-up-right-circle-fill"></i>
+        </a>
+        <a href="#" className="mx-1 grant-delete-btn" onClick={(evt) => {
+          evt.preventDefault();
+          if(!tokenIdCall.isFetched)
+            return;
+
+          props.setDialog((
+            <GrantDelete 
+              grantId={parseInt(tokenIdCall.data?.toString())} 
+              name={grantName}
+              owner={ownerOfCall.data?.toString()}
+              closeFn={() => { props.setDialog(null); }} 
+            />
+          ));
+        }}>
+          <i className="bi bi-trash3-fill"></i>
+        </a>
+      </td>
     </tr>
   )
 

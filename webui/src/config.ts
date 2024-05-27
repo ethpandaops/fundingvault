@@ -13,10 +13,12 @@ export interface ChainConfig {
 
 export interface Config {
 	AppVersion: string;
+	AdminRole: string;
 	ManagerRole: string;
 	Chains: ChainConfig[];
 }
 
+/*
 const now = Math.floor((new Date()).getTime() / 1000);
 const iteration = Math.floor(((now - 1638471600) / 604800));
 export const ephemery = defineChain({
@@ -48,9 +50,11 @@ export const ephemery = defineChain({
 	},
 	testnet: true,
 })
+*/
 
 const FundingVaultConfig: Config = {
 	AppVersion: process.env.REACT_APP_GIT_VERSION as string,
+	AdminRole: "0x0000000000000000000000000000000000000000000000000000000000000000",
 	ManagerRole: "0xc7386e23c63a3088d7d0389761b7b890e58c103e1a12376eb26d3a4a04e2641b",
 	Chains: [
 		{
@@ -69,6 +73,7 @@ const FundingVaultConfig: Config = {
 			HumanNetworkName: "Sepolia",
 			BlockExplorerUrl: "https://sepolia.etherscan.io/",
 		},
+		/*
 		{
 			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
             TokenContractAddr: "0x97652A83CC29043fA9Be2781cc0038EBa70de911",
@@ -77,8 +82,15 @@ const FundingVaultConfig: Config = {
 			HumanNetworkName: "Ephmery",
 			BlockExplorerUrl: "https://explorer.ephemery.dev/",
 		},
+		*/
 	],
 };
+
+export var KnownChains = [
+	holesky,
+    sepolia,
+    //ephemery,
+];
 
 let CurrentConfig = FundingVaultConfig;
 
