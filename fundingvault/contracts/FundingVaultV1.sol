@@ -74,6 +74,7 @@ contract FundingVaultV1 is
   }
 
   function initialize(address tokenAddr) public {
+    require(tokenAddr != address(0), "tokenAddr must not be 0");
     require(_reentrancyStatus == 0 && _grantIdCounter == 0, "already initialized");
     require(_manager == _msgSender(), "access denied");
     _grantRole(DEFAULT_ADMIN_ROLE, _manager);
@@ -91,6 +92,8 @@ contract FundingVaultV1 is
   //## Admin configuration / rescue functions
 
   function rescueCall(address addr, uint256 amount, bytes calldata data) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    require(addr != address(0), "addr must not be 0");
+
     uint balance = address(this).balance;
     require(balance >= amount, "amount exceeds wallet balance");
 
@@ -107,6 +110,7 @@ contract FundingVaultV1 is
   }
 
   function setProxyManager(address manager) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    require(manager != address(0), "manager must not be 0");
     _manager = manager;
   }
 
@@ -219,9 +223,9 @@ contract FundingVaultV1 is
 
   function getGrants() public view returns (Grant[] memory) {
     IFundingVaultToken vaultToken = IFundingVaultToken(_vaultTokenAddr);
-    uint64 grantCount = uint64(vaultToken.totalSupply());
+    uint256 grantCount = vaultToken.totalSupply();
     Grant[] memory grants = new Grant[](grantCount);
-    for(uint64 grantIdx = 0; grantIdx < grantCount; grantIdx++) {
+    for(uint256 grantIdx = 0; grantIdx < grantCount; grantIdx++) {
       uint64 grantId = uint64(vaultToken.tokenByIndex(grantIdx));
       grants[grantIdx] = _grants[grantId];
     }
@@ -242,10 +246,10 @@ contract FundingVaultV1 is
     return _grantTotalClaimed[grantId];
   }
 
-  function getGrantLockTime(uint32 grantId) public view returns (uint64) {
+  function getGrantLockTime(uint64 grantId) public view returns (uint64) {
     require(_grants[grantId].claimTime > 0, "grant not found");
-    if(_grantClaimLock[grantId] > uint64(block.timestamp)) {
-      return _grantClaimLock[grantId] - uint64(block.timestamp);
+    if(_grantClaimLock[grantId] > _getTime()) {
+      return _grantClaimLock[grantId] - _getTime();
     }
     else {
       return 0;
@@ -294,6 +298,8 @@ contract FundingVaultV1 is
 
   function createGrant(address addr, uint128 amount, uint64 interval, bytes32 name) public onlyRole(GRANT_MANAGER_ROLE) nonReentrant {
     require(amount > 0 && interval > 0, "invalid grant");
+    require(interval < _getTime(), "interval too big");
+    require(addr != address(0), "addr must not be 0");
     uint256 grantQuota = uint256(amount) * 1 ether / interval;
     uint256 managerQuota = uint256(_managerLimitAmount) * 1 ether / _managerLimitInterval;
 
@@ -364,6 +370,7 @@ contract FundingVaultV1 is
 
   function transferGrant(uint64 grantId, address addr) public onlyRole(GRANT_MANAGER_ROLE) nonReentrant {
     require(_grants[grantId].claimTime > 0, "grant not found");
+    require(addr != address(0), "addr must not be 0");
 
     uint256 grantQuota = uint256(_grants[grantId].claimLimit) * 1 ether / _grants[grantId].claimInterval;
     uint256 managerQuota = uint256(_managerLimitAmount) * 1 ether / _managerLimitInterval;
@@ -464,6 +471,8 @@ contract FundingVaultV1 is
   }
 
   function claimTo(uint256 amount, address target) public whenNotPaused nonReentrant returns (uint256) {
+    require(target != address(0), "target must not be 0");
+
     uint256 claimAmount = _claimFrom(_msgSender(), amount, target);
     if(amount > 0) {
       require(claimAmount == amount, "claim failed");
@@ -477,6 +486,7 @@ contract FundingVaultV1 is
   function claimTo(uint64 grantId, uint256 amount, address target) public whenNotPaused nonReentrant returns (uint256) {
     require(_grants[grantId].claimTime > 0, "grant not found");
     require(_ownerOf(grantId) == _msgSender(), "not owner of this grant");
+    require(target != address(0), "target must not be 0");
 
     uint256 claimAmount = _claim(grantId, amount, target);
     if(amount > 0) {
