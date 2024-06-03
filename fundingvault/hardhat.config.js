@@ -3,7 +3,7 @@ require("@nomicfoundation/hardhat-toolbox");
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
 	paths: {
-		sources: "./fundingvault/contracts",
+		sources: "./contracts",
 	},
 	networks: {
 		hardhat: {

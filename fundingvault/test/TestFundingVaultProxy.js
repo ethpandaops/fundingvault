@@ -6,6 +6,22 @@ const { expect } = require("chai");
 // omit the env var to disable debug prints.
 const debug = process.env.HARDHAT_DEBUG !== undefined;
 
+function toHex(str, len) {
+	var result = '';
+	var ccode;
+	for (var i=0; i<str.length; i++) {
+	  	ccode = str.charCodeAt(i);
+	  	if(ccode) {
+			result += ccode.toString(16);
+	  	}
+	}
+	while(result.length < len * 2) {
+		result += "0";
+	}
+
+	return "0x"+result;
+}
+
 describe("Funding Vault Tests", function () {
 	// We define a fixture to reuse the same setup in every test.
 	// We use loadFixture to run this setup once, snapshot that state,
@@ -77,7 +93,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// check if grant token has been sent to grantee
 			expect(await token.balanceOf(grantee.getAddress())).to.equal(1);
@@ -91,7 +107,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// check if grant token has been sent to grantee
 			expect(await token.balanceOf(grantee.getAddress())).to.equal(1);
@@ -111,7 +127,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// check if grant token has been sent to grantee
 			expect(await token.balanceOf(grantee.getAddress())).to.equal(1);
@@ -131,7 +147,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// check if grant token has been sent to grantee
 			expect(await token.balanceOf(grantee.getAddress())).to.equal(1);
@@ -157,7 +173,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// check if grant token has been sent to grantee
 			expect(await token.balanceOf(grantee.getAddress())).to.equal(1);
@@ -174,7 +190,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// check if grant token has been sent to grantee
 			expect(await token.balanceOf(grantee.getAddress())).to.equal(1);
@@ -194,7 +210,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// check if grant token has been sent to grantee
 			expect(await token.balanceOf(grantee.getAddress())).to.equal(1);
@@ -220,7 +236,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// check if grant token has been sent to grantee
 			expect(await token.balanceOf(grantee.getAddress())).to.equal(1);
@@ -240,7 +256,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// check if grant token has been sent to grantee
 			expect(await token.balanceOf(grantee.getAddress())).to.equal(1);
@@ -304,15 +320,15 @@ describe("Funding Vault Tests", function () {
 			// create grant (2000 ETH per hour), should fail
 			var txErr = null;
 			try {
-				await proxiedVault.connect(manager).createGrant(grantee.getAddress(), 2000, 3600);
+				await proxiedVault.connect(manager).createGrant(grantee.getAddress(), 2000, 3600, toHex("Test Grant", 32));
 			} catch(ex) {
 				txErr = ex;
 			}
 			expect(txErr?.toString()).to.match(/amount exceeds manager limits/);
 
 			// create 2 grants (500 ETH per hour)
-			await proxiedVault.connect(manager).createGrant(grantee.getAddress(), 250, 3600);
-			await proxiedVault.connect(manager).createGrant(grantee.getAddress(), 750, 3600);
+			await proxiedVault.connect(manager).createGrant(grantee.getAddress(), 250, 3600, toHex("Test Grant 1", 32));
+			await proxiedVault.connect(manager).createGrant(grantee.getAddress(), 750, 3600, toHex("Test Grant 2", 32));
 
 			// check manager cooldown
 			expect(await proxiedVault.getManagerCooldown(manager.getAddress())).to.equal(3601);
@@ -320,7 +336,7 @@ describe("Funding Vault Tests", function () {
 			// create grant (500 ETH per hour), should fail
 			var txErr = null;
 			try {
-				await proxiedVault.connect(manager).createGrant(grantee.getAddress(), 500, 3600);
+				await proxiedVault.connect(manager).createGrant(grantee.getAddress(), 500, 3600, toHex("Test Grant 3", 32));
 			} catch(ex) {
 				txErr = ex;
 			}
@@ -330,7 +346,7 @@ describe("Funding Vault Tests", function () {
 			await time.increase(1802);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.connect(manager).createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.connect(manager).createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant 4", 32));
 
 			// check manager cooldown
 			expect(await proxiedVault.getManagerCooldown(manager.getAddress())).to.equal(5400);
@@ -341,7 +357,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// update grant (500 ETH per hour)
 			// this is a decrease of the grant allowance, so it shouldn't affect the manager cooldown
@@ -363,10 +379,10 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create test grants
-			await proxiedVault.createGrant(grantee.getAddress(), 100, 3600);
-			await proxiedVault.createGrant(grantee.getAddress(), 100, 3600);
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 100, 3600, toHex("Test Grant 1", 32));
+			await proxiedVault.createGrant(grantee.getAddress(), 100, 3600, toHex("Test Grant 2", 32));
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant 3", 32));
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant 4", 32));
 
 			// transfer grant (100 ETH per hour)
 			await proxiedVault.connect(manager).transferGrant(1, grantee2.getAddress());
@@ -433,7 +449,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// claim all available balance
 			let oldGranteeBalance = await ethers.provider.getBalance(grantee.getAddress());
@@ -456,7 +472,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			for(let i = 0; i < 10; i++) {
 				// claim 100 ETH (1/10 of granted amount)
@@ -481,7 +497,7 @@ describe("Funding Vault Tests", function () {
 			await prepareTest(proxiedVault);
 
 			// create grant (1000 ETH per hour)
-			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600);
+			await proxiedVault.createGrant(grantee.getAddress(), 1000, 3600, toHex("Test Grant", 32));
 
 			// claim all available balance
 			await proxiedVault.connect(grantee).claim(0);
@@ -538,7 +554,7 @@ describe("Funding Vault Tests", function () {
 				}
 		
 				// Create grant with random values
-				await proxiedVault.createGrant(granteeAddress, randomGrant, randomTime);
+				await proxiedVault.createGrant(granteeAddress, randomGrant, randomTime, toHex("Test Grant " + (i + 1), 32));
 				if (debug) {
 					console.log('Grant created');
 				}
