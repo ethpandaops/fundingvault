@@ -2,7 +2,7 @@ name: Build and Test
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -18,10 +18,10 @@ jobs:
           node-version: '18.17.1'
 
       - name: Install dependencies
-        run: npm install
+        run: cd fundingvault && npm install
 
       - name: Build project
-        run: npm run build
+        run: cd fundingvault && npm run build
 
       - name: Run tests
-        run: npm run test
+        run: cd fundingvault && npm run test

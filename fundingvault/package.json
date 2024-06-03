@@ -1,11 +1,15 @@
 {
   "name": "hardhat-project",
   "license": "MIT",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "hardhat compile",
+    "test": "hardhat test"
+  },
   "devDependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.10",
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "@openzeppelin/contracts": "^4.9.5",
     "hardhat": "^2.19.2"
-  },
-  "version": "0.0.0"
+  }
 }
