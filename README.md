@@ -6,7 +6,7 @@ Welcome to the repository for the Funding Vault contract, actively deployed on t
 
 ## Usage
 
-Entities eligible for funding can claim funds regularly either through the [Web UI]() or programmatically via direct calls to the vault contract.
+Entities eligible for funding can claim funds regularly either through the [Web UI](https://fundingvault.ethpandaops.io/) or programmatically via direct calls to the vault contract.
 
 ### Applying for a Grant
 
