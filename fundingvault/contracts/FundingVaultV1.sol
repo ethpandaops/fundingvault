@@ -3,14 +3,14 @@ pragma solidity ^0.8.21;
 
 /*
 ##################################################################
-#                Holešovice Funding Vault                        #
+#                      Funding Vault                             #
 #                                                                #
 # This contract is used to distribute fund reserves to faucets   #
 # or other projects that have a ongoing need for testnet funds.  #
 #                                                                #
 #  Vault contract:  0x610866c6089768dA95524bcc4cE7dB61eDa3931c   #
 #                                                                #
-# see https://dev.pk910.de/ethvault               by pk910.eth   #
+# see https://github.com/ethpandaops/fundingvault                #
 ##################################################################
 */
 
