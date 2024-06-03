@@ -2,7 +2,7 @@ const { ethers, network } = require("hardhat");
 const fs = require('fs');
 
 /* bootstrap commands:
-npx hardhat vars set DEPLOYER_PRIVATE_KEY
+npx hardhat vars set FUNDINGVAULT_DEPLOYER_PRIVATE_KEY
 npx hardhat run scripts/bootstrap.js --network ephemery
 */
 
