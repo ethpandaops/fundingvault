@@ -1,7 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-ignition");
 
-const DEPLOYER_PRIVATE_KEY = vars.has("DEPLOYER_PRIVATE_KEY") ? [ vars.get("DEPLOYER_PRIVATE_KEY") ] : undefined;
+const DEPLOYER_PRIVATE_KEY = vars.has("FUNDINGVAULT_DEPLOYER_PRIVATE_KEY") ? [ vars.get("FUNDINGVAULT_DEPLOYER_PRIVATE_KEY") ] : undefined;
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
