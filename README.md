@@ -9,9 +9,21 @@ Welcome to the repository for the Funding Vault contract, actively deployed on t
 Entities eligible for funding can claim funds regularly either through the [Web UI]() or programmatically via direct calls to the vault contract.
 
 ### Applying for a Grant
-If your project needs ongoing testnet funds (for development teams or low-traffic faucets), please open an issue in this repository with details about your requirements and the amount of ETH needed.
+
+To ensure the integrity and purpose of the fund allocation, applicants must meet the following criteria to be eligible for a grant:
+
+- **Website**: Provide a link to a functioning website with comprehensive information about the project or company.
+- **Project Description**: Include a concise description of your project and a detailed explanation of how the funds will be used.
+- **Working Demo/Implementation**: Showcase a working demo or an implementation of the project part that requires ongoing funding to demonstrate its functionality and relevance.
+- **Protection Methods for Faucets**: If applying for a faucet, describe the methods employed to protect against abuse. Note that simple captcha protection is generally insufficient.
+
+If your project meets these criteria and needs ongoing testnet funds (for development teams or low-traffic faucets), please open an issue in this repository with details about your requirements and the amount of ETH needed.
 
 Upon approval, you will receive an ERC721 token ("NFT") that grants access to the specified funds. It is your responsibility to secure this NFT, although you may transfer it as needed.
+
+**Ineligible Uses**:
+- **Token Liquidity**: Providing liquidity for tokens is not an appropriate use of these funds.
+- **Top-list Placement**: Funding intended to maintain a position on any kind of top-list is also considered inappropriate.
 
 Grants will continue as long as:
 - No rules are violated.
