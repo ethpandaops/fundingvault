@@ -49,3 +49,4 @@ The contract operates on a time-based system. If you claim the full available am
 ## Credits
 
 A big thanks to EF Testing for their testing efforts and to Nethermind Security for [auditing the smart contract](https://github.com/ethpandaops/fundingvault/blob/master/fundingvault/audit/NM-0234-Ethereum-Foundation-Final.pdf)!
+
