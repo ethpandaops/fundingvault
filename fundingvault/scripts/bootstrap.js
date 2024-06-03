@@ -1,6 +1,11 @@
 const { ethers, network } = require("hardhat");
 const fs = require('fs');
 
+/* bootstrap commands:
+npx hardhat vars set DEPLOYER_PRIVATE_KEY
+npx hardhat run scripts/bootstrap.js --network ephemery
+*/
+
 async function main() {
     const [owner] = await ethers.getSigners();
     console.log("deployer address (owner): " + owner.address)
