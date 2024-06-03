@@ -24,12 +24,12 @@ module.exports = {
       		accounts: DEPLOYER_PRIVATE_KEY,
 		},
 		holesky: {
-			chainId: 11155111,
+			chainId: 17000,
 			url: `https://rpc.sepolia.ethpandaops.io/`,
       		accounts: DEPLOYER_PRIVATE_KEY,
 		},
 		ephemery: {
-			url: `http://10.16.72.103:8545`,
+			url: `https://otter.bordel.wtf/erigon`,
       		accounts: DEPLOYER_PRIVATE_KEY,
 		},
 	},
