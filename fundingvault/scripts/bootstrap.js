@@ -1,20 +1,23 @@
 const { ethers, network } = require("hardhat");
+const { vars } = require("hardhat/config");
 const fs = require('fs');
+
 
 /* bootstrap commands:
 npx hardhat vars set FUNDINGVAULT_DEPLOYER_PRIVATE_KEY
+npx hardhat vars set FUNDINGVAULT_OWNER_ADDRESS
 npx hardhat run scripts/bootstrap.js --network ephemery
 */
 
 async function main() {
-    const [owner] = await ethers.getSigners();
-    console.log("deployer address (owner): " + owner.address)
+    const [deployer] = await ethers.getSigners();
+    console.log("deployer address (owner): " + deployer.address)
     console.log("")
 
     // First deploy proxy
     console.log("deploying FundingVaultProxy...")
     let Proxy = await ethers.getContractFactory("FundingVaultProxy");
-    let proxy = await Proxy.connect(owner).deploy();
+    let proxy = await Proxy.connect(deployer).deploy();
     let proxyAddress = await proxy.getAddress();
     console.log("  success: " + proxyAddress);
 
@@ -28,7 +31,7 @@ async function main() {
     // Lastly, deploy vault implementation
     console.log("deploying FundingVaultV1...")
     let FundingVault = await ethers.getContractFactory("FundingVaultV1");
-    let vault = await FundingVault.connect(owner).deploy();
+    let vault = await FundingVault.connect(deployer).deploy();
     let vaultAddress = await vault.getAddress();
     console.log("  success: " + vaultAddress);
 
@@ -38,10 +41,36 @@ async function main() {
     // Initialize vault thorugh proxy's upgradeToAndCall
     console.log("calling upgradeToAndCall on FundingVaultProxy...")
     const initData = vault.interface.encodeFunctionData("initialize(address)", [tokenAddress]);
-    await proxy.connect(owner).upgradeToAndCall(vaultAddress, initData, {
-        gasLimit: 100000,
+    console.log("init data: " + initData)
+    await proxy.connect(deployer).upgradeToAndCall(vaultAddress, initData, {
+        gasLimit: 150000,
     });
     console.log("  success.");
+
+    // change owner if set
+    if(vars.has("FUNDINGVAULT_OWNER_ADDRESS")) {
+        let ownerAddress = vars.get("FUNDINGVAULT_OWNER_ADDRESS");
+        let adminRole = "0x0000000000000000000000000000000000000000000000000000000000000000";
+        console.log("changing FundingVault admin to: " + ownerAddress);
+
+        console.log("calling grantRole & setProxyManager on FundingVault...");
+        await Promise.all([
+            proxiedVault.connect(deployer).grantRole(adminRole, ownerAddress, {
+                gasLimit: 60000,
+            }),
+            proxiedVault.connect(deployer).setProxyManager(ownerAddress, {
+                gasLimit: 40000,
+            }),
+        ]);
+        console.log("  success.");
+
+        console.log("calling revokeRole on FundingVault...");
+        await proxiedVault.connect(deployer).revokeRole(adminRole, deployer.address, {
+            gasLimit: 60000,
+        });
+        console.log("  success.");
+    }
+
 }
 
 main()
