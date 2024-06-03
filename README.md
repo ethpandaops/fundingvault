@@ -1,36 +1,39 @@
-# Holešovice Funding Vault
+# Funding Vault
 
-This is the home for the holesky funding vault contract: [0x610866c6089768dA95524bcc4cE7dB61eDa3931c](https://holesky.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c)
+Welcome to the repository for the Funding Vault contract, actively deployed on the [Holešovice](https://holesky.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) and [Sepolia](https://sepolia.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) Testnets. This project serves as a reliable source of testnet funds for smaller faucets and projects that require a steady influx of funds.
 
-The purpose of this project is to give smaller faucets and projects with a constant need for testnet funds a reliable source for these funds in the [Holešovice Testnet](https://github.com/eth-clients/holesky).
+**Golden Rule**: Testnet funds may never be sold for profit or hoarded. They are public goods and should be utilized responsibly by entities with genuine needs.
 
-Golden Rule: Funds may never be sold for profit or hoarded with no use.\
-Testnet funds are public goods and should be shared freely with entities that have an actual need for them.
+## Usage
 
-## Technical concept
+Entities eligible for funding can claim funds regularly either through the [Web UI]() or programmatically via direct calls to the vault contract.
 
-The funding vault consists of 2 contracts:
-* The [`FundingVaultProxy`](https://holesky.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) / `FundingVaultV1` upgradable contract, which holds the funding reserves and fulfills fund requests (claims).
-* The [`FundingVaultToken`](https://holesky.etherscan.io/address/0x97652a83cc29043fa9be2781cc0038eba70de911) contract, that provides a ERC721 token which gives permission to claim the allowed funds from the vault.
+### Applying for a Grant
+If your project needs ongoing testnet funds (for development teams or low-traffic faucets), please open an issue in this repository with details about your requirements and the amount of ETH needed.
 
-If you're running a project that has a ongoing need for testnet funds (either for development teams or low audience faucets),
-open a issue in this repository to apply for a funding grant. Supply some information about what you need these funds for and how much ETH per month you need. The needs shouldn't exceed a max. of 10k HolETH/month.
+Upon approval, you will receive an ERC721 token ("NFT") that grants access to the specified funds. It is your responsibility to secure this NFT, although you may transfer it as needed.
 
-If your application is accepted, you'll receive a ERC721 token ("NFT") on holesky, which gives you access to the granted amount of funds when needed. \
-You're responsible for keeping this NFT secure, but you're allowed to transfer it where-ever you want.
+Grants will continue as long as:
+- No rules are violated.
+- Funds are used appropriately.
+- Your project remains active.
+The grant is designed to last until the planned end of Sepolia in December 2026 and Holešovice in December 2028.
 
-If no rules are broken and your project remains active, the grant will persist till the planned end of holesky in Dec 2028.
+## Programmatic Claims
 
+Holders of the Grant NFT can claim funds within the granted limits by calling functions on the Funding Vault Contract.
 
-The holder of the NFT is allowed to claim funds from the funding vault (in respect of the granted limits).\
-To do so, one of the claim functions on the [Funding Vault Contract](https://holesky.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) needs to be called from the wallet that holds the NFT.
+**Contract Address**: `0x610866c6089768dA95524bcc4cE7dB61eDa3931c`
 
-Available `claim` functions:
-* `claim(uint256 amount)` - request the amount of funds specified by `amount` (in wei) and send to the sender wallet.
-* `claimTo(uint256 amount, address target)` - request the amount of funds specified by `amount` (in wei) and send to `target`.
+### Available Claim Functions:
+- `claim(uint256 amount)`: Request and send the specified amount of funds (in wei) to the wallet initiating the call.
+- `claimTo(uint256 amount, address target)`: Request and send the specified amount of funds (in wei) to a target address.
 
-When supplying a amount of `0`, the whole allowed amount will be paid out.
+Specifying an amount of `0` will trigger a payout of all available funds.
 
-The contract is time based. When claiming the full available amount, you can already claim again a few secs later. But in that case, only the funds that piled up during these few secs will be available.
+### Timing of Claims
+The contract operates on a time-based system. If you claim the full available amount, subsequent claims can be made within seconds, but only the funds that have accumulated since the last claim will be available. For instance, with a grant of 10k HolETH/month, you would need to wait a day to claim approximately 333 HolETH, or two days for about 666 HolETH, and so on.
 
-If you've been granted 10k HolETH/month, you have to wait a day to claim ~333 HolETH, or wait 2 days to claim 666 HolETH, etc...
+## Credits
+
+A big thanks to EF Testing for their testing efforts and to Nethermind Security for [auditing the smart contract](https://github.com/ethpandaops/fundingvault/blob/master/fundingvault/audit/NM-0234-Ethereum-Foundation-Final.pdf)!
