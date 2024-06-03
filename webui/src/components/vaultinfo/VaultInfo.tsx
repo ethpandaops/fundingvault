@@ -16,7 +16,8 @@ const VaultInfo = (): React.ReactElement => {
       <h1>Testnet Funding Vault</h1>
       <p>
         The FundingVault contract provides a way to distribute continuous limited amounts of funds to authorized entities.<br />
-        The distribution is time gated and a specific limit per grant is enforced.
+        The distribution is time gated and a specific limit per grant is enforced.<br />
+        Check out the <a href="https://github.com/ethpandaops/fundingvault/blob/master/README.md">FundingVault repository</a> for more details.
       </p>
       {isConnected && chain ?
       <EligibilityCheck /> : null}
