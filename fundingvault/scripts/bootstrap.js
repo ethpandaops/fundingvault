@@ -3,7 +3,8 @@ const fs = require('fs');
 
 async function main() {
     const [owner] = await ethers.getSigners();
-    console.log(owner.address)
+    console.log("deployer address (owner): " + owner.address)
+    console.log("")
 
     // First deploy proxy
     console.log("deploying FundingVaultProxy...")

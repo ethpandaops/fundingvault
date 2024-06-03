@@ -1,7 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-ignition");
 
-const DEPLOYER_PRIVATE_KEY = vars.get("DEPLOYER_PRIVATE_KEY");
+const DEPLOYER_PRIVATE_KEY = vars.has("DEPLOYER_PRIVATE_KEY") ? [ vars.get("DEPLOYER_PRIVATE_KEY") ] : undefined;
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -21,16 +21,16 @@ module.exports = {
 		sepolia: {
 			chainId: 11155111,
 			url: `https://rpc.sepolia.ethpandaops.io/`,
-      		accounts: [DEPLOYER_PRIVATE_KEY],
+      		accounts: DEPLOYER_PRIVATE_KEY,
 		},
 		holesky: {
 			chainId: 11155111,
 			url: `https://rpc.sepolia.ethpandaops.io/`,
-      		accounts: [DEPLOYER_PRIVATE_KEY],
+      		accounts: DEPLOYER_PRIVATE_KEY,
 		},
 		ephemery: {
 			url: `http://10.16.72.103:8545`,
-      		accounts: [DEPLOYER_PRIVATE_KEY],
+      		accounts: DEPLOYER_PRIVATE_KEY,
 		},
 	},
 	solidity: {
