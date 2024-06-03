@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Static web frontend for FundingVault contract",
   "author": "pk910",
+  "license": "MIT",
   "dependencies": {
     "@rainbow-me/rainbowkit": "^2.0.4",
     "@rainbow-me/rainbowkit-siwe-next-auth": "^0.4.0",
@@ -42,7 +43,11 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "eqeqeq": "off",
+      "jsx-a11y/anchor-is-valid": "off"
+    }
   },
   "browserslist": {
     "production": [

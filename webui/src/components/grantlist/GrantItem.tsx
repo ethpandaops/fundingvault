@@ -1,15 +1,13 @@
 import {
 	useAccount,
   useReadContract,
-  useWriteContract,
 } from "wagmi";
 import { ConfigForChainId } from "../../utils/chaincfg";
 
 import FundingVaultAbi from "../../abi/FundingVault.json";
 import VaultTokenAbi from "../../abi/VaultToken.json";
-import { useEffect, useState } from "react";
-import { toBigintUnit, toDecimalUnit, toReadableAmount, toReadableDuration } from "../../utils/ConvertHelpers";
-import { isAddress } from "ethers";
+import { useEffect } from "react";
+import { toReadableAmount, toReadableDuration } from "../../utils/ConvertHelpers";
 import GrantRename from "../grant_rename/GrantRename";
 import GrantUpdate from "../grant_update/GrantUpdate";
 import GrantLock from "../grant_lock/GrantLock";
@@ -102,12 +100,12 @@ const GrantItem = (props: IGrantItemProps): React.ReactElement => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [tokenIdCall, ownerOfCall]);
 
   return (
     <tr>
       <td>{tokenIdCall.data?.toString() as string}</td>
-      <td><a href={chainConfig.BlockExplorerUrl + "address/" + ownerOfCall.data?.toString()} target="_blank">{ownerOfCall.data?.toString()}</a></td>
+      <td><a href={chainConfig.BlockExplorerUrl + "address/" + ownerOfCall.data?.toString()} target="_blank" rel="noreferrer">{ownerOfCall.data?.toString()}</a></td>
       <td>
         {grantName} 
         <a href="#" className="grant-edit-btn" onClick={(evt) => {

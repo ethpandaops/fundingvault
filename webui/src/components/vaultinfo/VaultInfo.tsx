@@ -8,7 +8,7 @@ import EligibilityCheck from "./EligibilityCheck";
 
 
 const VaultInfo = (): React.ReactElement => {
-  const { address: walletAddress, isConnected, chain } = useAccount();
+  const { isConnected, chain } = useAccount();
   const { openConnectModal } = useConnectModal();
 
   return (

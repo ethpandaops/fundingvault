@@ -1,6 +1,5 @@
 import {
 	useAccount,
-  useReadContract,
   useWriteContract,
 } from "wagmi";
 import { ConfigForChainId } from "../../utils/chaincfg";
@@ -8,7 +7,6 @@ import { ConfigForChainId } from "../../utils/chaincfg";
 import FundingVaultAbi from "../../abi/FundingVault.json";
 import { useState } from "react";
 import { Modal } from 'react-bootstrap';
-import { toReadableAmount, toReadableDuration } from "../../utils/ConvertHelpers";
 import { isAddress } from "ethers";
 
 function toHex(str) {
@@ -41,7 +39,7 @@ const GrantCreate = (props: { closeFn?: () => void }): React.ReactElement => {
   ];
   let intervalIsOption = false;
   intervalOptions.forEach((option) => {
-    if(option.value == intervalInput)
+    if(option.value === intervalInput)
       intervalIsOption = true;
   });
 
@@ -92,7 +90,7 @@ const GrantCreate = (props: { closeFn?: () => void }): React.ReactElement => {
               <select className="form-select" onChange={(evt) => { setIntervalInput(parseInt(evt.target.value)); }}>
                 {intervalOptions.map((option) => {
                   return (
-                    <option key={option.value} value={option.value} selected={option.value == intervalInput}>{option.title}</option>
+                    <option key={option.value} value={option.value} selected={option.value === intervalInput}>{option.title}</option>
                   );
                 })}
                 <option value="0" selected={!intervalIsOption}>custom</option>
@@ -116,7 +114,7 @@ const GrantCreate = (props: { closeFn?: () => void }): React.ReactElement => {
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-info">
-                Create transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + createRequest.data} target="_blank">{createRequest.data}</a>
+                Create transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + createRequest.data} target="_blank" rel="noreferrer">{createRequest.data}</a>
               </div>
             </div>
           </div>
@@ -125,7 +123,7 @@ const GrantCreate = (props: { closeFn?: () => void }): React.ReactElement => {
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-danger">
-                Create failed. {createRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + createRequest.data} target="_blank">{createRequest.data}</a></span> : null}<br />
+                Create failed. {createRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + createRequest.data} target="_blank" rel="noreferrer">{createRequest.data}</a></span> : null}<br />
                 {createRequest.error.message}
               </div>
             </div>
@@ -135,7 +133,7 @@ const GrantCreate = (props: { closeFn?: () => void }): React.ReactElement => {
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-success">
-                Create TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + createRequest.data} target="_blank">{createRequest.data}</a>
+                Create TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + createRequest.data} target="_blank" rel="noreferrer">{createRequest.data}</a>
               </div>
             </div>
           </div>

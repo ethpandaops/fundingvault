@@ -1,12 +1,10 @@
 import {
 	useAccount,
-  useReadContract,
   useWriteContract,
 } from "wagmi";
 import { ConfigForChainId } from "../../utils/chaincfg";
 
 import FundingVaultAbi from "../../abi/FundingVault.json";
-import { useState } from "react";
 import { Modal } from 'react-bootstrap';
 
 const GrantDelete = (props: { grantId: number, name: string, owner: string, closeFn?: () => void }): React.ReactElement => {
@@ -40,7 +38,7 @@ const GrantDelete = (props: { grantId: number, name: string, owner: string, clos
               Owner:
             </div>
             <div className="col-8">
-              <a href={chainConfig.BlockExplorerUrl + "address/" + props.owner} target="_blank">{props.owner}</a>
+              <a href={chainConfig.BlockExplorerUrl + "address/" + props.owner} target="_blank" rel="noreferrer">{props.owner}</a>
             </div>
           </div>
 
@@ -48,7 +46,7 @@ const GrantDelete = (props: { grantId: number, name: string, owner: string, clos
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-info">
-                Delete transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + deleteRequest.data} target="_blank">{deleteRequest.data}</a>
+                Delete transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + deleteRequest.data} target="_blank" rel="noreferrer">{deleteRequest.data}</a>
               </div>
             </div>
           </div>
@@ -57,7 +55,7 @@ const GrantDelete = (props: { grantId: number, name: string, owner: string, clos
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-danger">
-                Delete failed. {deleteRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + deleteRequest.data} target="_blank">{deleteRequest.data}</a></span> : null}<br />
+                Delete failed. {deleteRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + deleteRequest.data} target="_blank" rel="noreferrer">{deleteRequest.data}</a></span> : null}<br />
                 {deleteRequest.error.message}
               </div>
             </div>
@@ -67,7 +65,7 @@ const GrantDelete = (props: { grantId: number, name: string, owner: string, clos
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-success">
-                Delete TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + deleteRequest.data} target="_blank">{deleteRequest.data}</a>
+                Delete TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + deleteRequest.data} target="_blank" rel="noreferrer">{deleteRequest.data}</a>
               </div>
             </div>
           </div>

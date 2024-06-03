@@ -1,11 +1,10 @@
 // @ts-nocheck
-import { Suspense, useEffect, useRef } from "react"
+import { Suspense, useRef } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Physics, usePlane, useCompoundBody, useSphere } from "@react-three/cannon"
-import { Environment, Sky, useGLTF } from "@react-three/drei"
+import { Environment, Sky } from "@react-three/drei"
 import { EthLogoGeometry } from './EthLogoMesh';
 import { DoubleSide, Vector3, MeshStandardMaterial, Matrix4 } from 'three';
-import { Perf } from 'r3f-perf'
 
 let NUM = 40;
 let BOUNDING_SCALAR = 1; 

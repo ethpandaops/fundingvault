@@ -6,14 +6,7 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './utils/reportWebVitals';
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WagmiProvider } from 'wagmi';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Suspense } from "react";
-import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import {
-  holesky,
-  sepolia,
-} from 'wagmi/chains';
 
 import VaultPage from './components/VaultPage';
 import { KnownChains } from './config';

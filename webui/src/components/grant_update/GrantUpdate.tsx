@@ -1,6 +1,5 @@
 import {
 	useAccount,
-  useReadContract,
   useWriteContract,
 } from "wagmi";
 import { ConfigForChainId } from "../../utils/chaincfg";
@@ -9,18 +8,6 @@ import FundingVaultAbi from "../../abi/FundingVault.json";
 import { useState } from "react";
 import { Modal } from 'react-bootstrap';
 import { toReadableAmount, toReadableDuration } from "../../utils/ConvertHelpers";
-
-function toHex(str) {
-  var result = '';
-  var ccode;
-  for (var i=0; i<str.length; i++) {
-    ccode = str.charCodeAt(i);
-    if(ccode) {
-      result += ccode.toString(16);
-    }
-  }
-  return result;
-}
 
 const GrantRename = (props: { grantId: number, name: string, amount: number, interval: number, closeFn?: () => void }): React.ReactElement => {
   const { address, chain } = useAccount();
@@ -113,7 +100,7 @@ const GrantRename = (props: { grantId: number, name: string, amount: number, int
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-info">
-                Update transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + updateRequest.data} target="_blank">{updateRequest.data}</a>
+                Update transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + updateRequest.data} target="_blank" rel="noreferrer">{updateRequest.data}</a>
               </div>
             </div>
           </div>
@@ -122,7 +109,7 @@ const GrantRename = (props: { grantId: number, name: string, amount: number, int
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-danger">
-                Update failed. {updateRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + updateRequest.data} target="_blank">{updateRequest.data}</a></span> : null}<br />
+                Update failed. {updateRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + updateRequest.data} target="_blank" rel="noreferrer">{updateRequest.data}</a></span> : null}<br />
                 {updateRequest.error.message}
               </div>
             </div>
@@ -132,7 +119,7 @@ const GrantRename = (props: { grantId: number, name: string, amount: number, int
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-success">
-                Rename TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + updateRequest.data} target="_blank">{updateRequest.data}</a>
+                Rename TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + updateRequest.data} target="_blank" rel="noreferrer">{updateRequest.data}</a>
               </div>
             </div>
           </div>

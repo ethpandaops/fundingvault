@@ -4,23 +4,12 @@ import {
 } from "wagmi";
 import { ConfigForChainId } from "../../utils/chaincfg";
 
-import FundingVaultAbi from "../../abi/FundingVault.json";
 import VaultTokenAbi from "../../abi/VaultToken.json";
-import { useEffect } from "react";
 import ClaimForm from "./ClaimForm";
 
 const EligibilityCheck = (): React.ReactElement => {
   const { address, chain } = useAccount();
   let chainConfig = ConfigForChainId(chain!.id)!;
-  let refreshTimerId: number;
-
-  useEffect( () => {
-    if(refreshTimerId) {
-      console.log("clear " + refreshTimerId);
-      window.clearInterval(refreshTimerId);
-      refreshTimerId = 0;
-    }
-  }, []);
 
   const tokenBalance = useReadContract({
 		address: chainConfig.TokenContractAddr,

@@ -1,6 +1,5 @@
 import {
 	useAccount,
-  useReadContract,
   useWriteContract,
 } from "wagmi";
 import { ConfigForChainId } from "../../utils/chaincfg";
@@ -49,7 +48,7 @@ const GrantLock = (props: { grantId: number, name: string, closeFn?: () => void 
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-info">
-                Lock transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + lockRequest.data} target="_blank">{lockRequest.data}</a>
+                Lock transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + lockRequest.data} target="_blank" rel="noreferrer">{lockRequest.data}</a>
               </div>
             </div>
           </div>
@@ -58,7 +57,7 @@ const GrantLock = (props: { grantId: number, name: string, closeFn?: () => void 
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-danger">
-                Lock failed. {lockRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + lockRequest.data} target="_blank">{lockRequest.data}</a></span> : null}<br />
+                Lock failed. {lockRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + lockRequest.data} target="_blank" rel="noreferrer">{lockRequest.data}</a></span> : null}<br />
                 {lockRequest.error.message}
               </div>
             </div>
@@ -68,7 +67,7 @@ const GrantLock = (props: { grantId: number, name: string, closeFn?: () => void 
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-success">
-                Lock TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + lockRequest.data} target="_blank">{lockRequest.data}</a>
+                Lock TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + lockRequest.data} target="_blank" rel="noreferrer">{lockRequest.data}</a>
               </div>
             </div>
           </div>

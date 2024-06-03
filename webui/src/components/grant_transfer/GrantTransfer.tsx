@@ -1,6 +1,5 @@
 import {
 	useAccount,
-  useReadContract,
   useWriteContract,
 } from "wagmi";
 import { ConfigForChainId } from "../../utils/chaincfg";
@@ -41,7 +40,7 @@ const GrantTransfer = (props: { grantId: number, name: string, owner: string, cl
               Current Owner:
             </div>
             <div className="col-7">
-              <a href={chainConfig.BlockExplorerUrl + "address/" + props.owner} target="_blank">{props.owner}</a>
+              <a href={chainConfig.BlockExplorerUrl + "address/" + props.owner} target="_blank" rel="noreferrer">{props.owner}</a>
             </div>
           </div>
           <div className="row my-2">
@@ -57,7 +56,7 @@ const GrantTransfer = (props: { grantId: number, name: string, owner: string, cl
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-info">
-                Transfer transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + transferRequest.data} target="_blank">{transferRequest.data}</a>
+                Transfer transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + transferRequest.data} target="_blank" rel="noreferrer">{transferRequest.data}</a>
               </div>
             </div>
           </div>
@@ -66,7 +65,7 @@ const GrantTransfer = (props: { grantId: number, name: string, owner: string, cl
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-danger">
-                Transfer failed. {transferRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + transferRequest.data} target="_blank">{transferRequest.data}</a></span> : null}<br />
+                Transfer failed. {transferRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + transferRequest.data} target="_blank" rel="noreferrer">{transferRequest.data}</a></span> : null}<br />
                 {transferRequest.error.message}
               </div>
             </div>
@@ -76,7 +75,7 @@ const GrantTransfer = (props: { grantId: number, name: string, owner: string, cl
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-success">
-                Transfer TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + transferRequest.data} target="_blank">{transferRequest.data}</a>
+                Transfer TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + transferRequest.data} target="_blank" rel="noreferrer">{transferRequest.data}</a>
               </div>
             </div>
           </div>

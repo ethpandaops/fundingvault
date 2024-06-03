@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useAccount, useReadContract } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Suspense } from "react";
@@ -53,7 +53,7 @@ const VaultPage = (): React.ReactElement => {
               </Routes>
             </div>
             <div className="page-footer">
-              <span>Powered by <a href="https://github.com/pk910/holesky-fundingvault" target="_blank">pk910/holesky-fundingvault</a> | {CurrentConfig.AppVersion ? "git-" + CurrentConfig.AppVersion : "dev build"}</span>
+              <span>Powered by <a href="https://github.com/pk910/holesky-fundingvault" target="_blank" rel="noreferrer">pk910/holesky-fundingvault</a> | {CurrentConfig.AppVersion ? "git-" + CurrentConfig.AppVersion : "dev build"}</span>
             </div>
           </div>
         </Background>

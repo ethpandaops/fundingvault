@@ -1,6 +1,5 @@
 import {
 	useAccount,
-  useReadContract,
   useWriteContract,
 } from "wagmi";
 import { ConfigForChainId } from "../../utils/chaincfg";
@@ -68,7 +67,7 @@ const GrantRename = (props: { grantId: number, name: string, closeFn?: () => voi
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-info">
-                Rename transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + renameRequest.data} target="_blank">{renameRequest.data}</a>
+                Rename transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + renameRequest.data} target="_blank" rel="noreferrer">{renameRequest.data}</a>
               </div>
             </div>
           </div>
@@ -77,7 +76,7 @@ const GrantRename = (props: { grantId: number, name: string, closeFn?: () => voi
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-danger">
-                Rename failed. {renameRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + renameRequest.data} target="_blank">{renameRequest.data}</a></span> : null}<br />
+                Rename failed. {renameRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + renameRequest.data} target="_blank" rel="noreferrer">{renameRequest.data}</a></span> : null}<br />
                 {renameRequest.error.message}
               </div>
             </div>
@@ -87,7 +86,7 @@ const GrantRename = (props: { grantId: number, name: string, closeFn?: () => voi
           <div className="row mt-3">
             <div className="col-12">
               <div className="alert alert-success">
-                Rename TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + renameRequest.data} target="_blank">{renameRequest.data}</a>
+                Rename TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + renameRequest.data} target="_blank" rel="noreferrer">{renameRequest.data}</a>
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { type Chain } from 'viem'
 import { holesky, sepolia } from "wagmi/chains";
-import { defineChain } from "viem";
+//import { defineChain } from "viem";
 
 export interface ChainConfig {
 	VaultContractAddr: `0x${string}`;

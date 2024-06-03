@@ -1,15 +1,13 @@
 import {
 	useAccount,
   useReadContract,
-  useWriteContract,
 } from "wagmi";
 import { ConfigForChainId } from "../../utils/chaincfg";
 
 import FundingVaultAbi from "../../abi/FundingVault.json";
 import CurrentConfig from "../../config";
 import { useEffect, useState } from "react";
-import { toBigintUnit, toDecimalUnit, toReadableAmount, toReadableDuration } from "../../utils/ConvertHelpers";
-import { isAddress } from "ethers";
+import { toReadableDuration } from "../../utils/ConvertHelpers";
 
 import "./GrantList.css"
 import GrantItem from "./GrantItem";
@@ -64,7 +62,7 @@ const GrantList = (): React.ReactElement => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [managerCooldown, grantList]);
 
   //console.log(grantList.data)
 

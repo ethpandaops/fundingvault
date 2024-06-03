@@ -54,7 +54,7 @@ const ClaimForm = (props: { grantId: number }): React.ReactElement => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [claimableBalance]);
   
   let maxAmount = toDecimalUnit(claimableBalance.data as bigint, chain?.nativeCurrency.decimals);
   if(isNaN(maxAmount)) {
@@ -139,7 +139,7 @@ const ClaimForm = (props: { grantId: number }): React.ReactElement => {
         <div className="row mt-3">
           <div className="col-12">
             <div className="alert alert-info">
-              Claim transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + claimRequest.data} target="_blank">{claimRequest.data}</a>
+              Claim transaction pending... TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + claimRequest.data} target="_blank" rel="noreferrer">{claimRequest.data}</a>
             </div>
           </div>
         </div>
@@ -148,7 +148,7 @@ const ClaimForm = (props: { grantId: number }): React.ReactElement => {
         <div className="row mt-3">
           <div className="col-12">
             <div className="alert alert-danger">
-              Claim failed. {claimRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + claimRequest.data} target="_blank">{claimRequest.data}</a></span> : null}<br />
+              Claim failed. {claimRequest.data as any ? <span>TX: <a href={chainConfig.BlockExplorerUrl + "tx/" + claimRequest.data} target="_blank" rel="noreferrer">{claimRequest.data}</a></span> : null}<br />
               {claimRequest.error.message}
             </div>
           </div>
@@ -158,7 +158,7 @@ const ClaimForm = (props: { grantId: number }): React.ReactElement => {
         <div className="row mt-3">
           <div className="col-12">
             <div className="alert alert-success">
-              Claim TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + claimRequest.data} target="_blank">{claimRequest.data}</a>
+              Claim TX: <a className="txhash" href={chainConfig.BlockExplorerUrl + "tx/" + claimRequest.data} target="_blank" rel="noreferrer">{claimRequest.data}</a>
             </div>
           </div>
         </div>
