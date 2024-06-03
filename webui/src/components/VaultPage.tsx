@@ -53,7 +53,7 @@ const VaultPage = (): React.ReactElement => {
               </Routes>
             </div>
             <div className="page-footer">
-              <span>Powered by <a href="https://github.com/pk910/holesky-fundingvault" target="_blank" rel="noreferrer">pk910/holesky-fundingvault</a> | {CurrentConfig.AppVersion ? "git-" + CurrentConfig.AppVersion : "dev build"}</span>
+              <span>Powered by <a href="https://github.com/ethpandaops/fundingvault" target="_blank" rel="noreferrer">ethpandaops/fundingvault</a> | {CurrentConfig.AppVersion ? "git-" + CurrentConfig.AppVersion : "dev build"}</span>
             </div>
           </div>
         </Background>
