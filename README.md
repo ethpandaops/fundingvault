@@ -17,7 +17,7 @@ To ensure the integrity and purpose of the fund allocation, applicants must supp
 - **Working Demo/Implementation**: Showcase a working demo or an implementation of the project part that requires ongoing funding to demonstrate its functionality and relevance.
 - **Protection Methods for Faucets**: If applying for a faucet, describe the methods employed to protect against abuse. Note that simple captcha protection is generally insufficient.
 
-If your project meets these criteria and needs ongoing testnet funds (for development teams or low-traffic faucets), please open an issue in this repository with details about your requirements and the amount of ETH needed.
+If your project meets these criteria and needs ongoing testnet funds (for development teams or low-traffic faucets), please [open an issue](https://github.com/ethpandaops/fundingvault/issues/new?assignees=&labels=application&projects=&template=application.yaml&title=Funding+Request%3A+%3Ctitle%3E) in this repository with details about your requirements and the amount of ETH needed.
 
 Upon approval, you will receive an ERC721 token ("NFT") that grants access to the specified funds. It is your responsibility to secure this NFT, although you may transfer it as needed.
 

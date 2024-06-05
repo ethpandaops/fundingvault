@@ -1,5 +1,5 @@
 name: Funding Request
-description: Apply for a holesky funding
+description: Apply for a testnet funding
 title: "Funding Request: <title>"
 labels: ["application"]
 body:
@@ -9,7 +9,7 @@ body:
         Thanks for taking the time to fill out the funding request form!
 
         Plese note that this funding request form is not intended for normal developers or small stakers.\
-        There are lots of faucets available that can properly cover your needs: [https://faucetlink.to/holesky](https://faucetlink.to/holesky)
+        There are lots of faucets available that can properly cover your needs: [https://faucetlink.to/](https://faucetlink.to/)
 
         If you're running a project that has an actual need for more funds, go ahead :)
   - type: input
@@ -67,6 +67,17 @@ body:
         Just deploying or testing a few contracts is not a valid reason, as the existing faucets are probably sufficient to cover your needs.
     validations:
       required: true
+
+  - type: dropdown
+    id: network
+    attributes:
+      label: Which testnet do you need funds on?
+      options:
+        - Please Select
+        - Sepolia
+        - Holesky
+    validations:
+      required: true
   - type: input
     id: wallet
     attributes:
@@ -75,6 +86,24 @@ body:
       placeholder: 0x...
     validations:
       required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        <b>Legit Check</b>\
+        In order to verify the legitimacy of your request we require you to provide one of the following:
+        * DNS TXT Record: \
+          Add a TXT Record to your projects domain, containing the wallet address entered above.
+        * Http accessible text file: \
+          Add a text file containing the wallet address entered above to your website and provide a link under your project domain for verification
+  - type: input
+    id: legitcheck
+    attributes:
+      label: Verification
+      description: Please provide how we can verify the legitimacy of your request (domain with txt record / link to text file)
+    validations:
+      required: true
+
   - type: checkboxes
     id: terms
     attributes:
