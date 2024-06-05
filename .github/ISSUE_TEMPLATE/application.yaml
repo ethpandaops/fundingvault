@@ -96,6 +96,7 @@ body:
           Add a TXT Record to your projects domain, containing the wallet address entered above.
         * Http accessible text file: \
           Add a text file containing the wallet address entered above to your website and provide a link under your project domain for verification
+        
         Please also try to submit the application from a github account that is clearly linked to your project.
   - type: input
     id: legitcheck
