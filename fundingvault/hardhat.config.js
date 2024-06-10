@@ -25,7 +25,7 @@ module.exports = {
 		},
 		holesky: {
 			chainId: 17000,
-			url: `https://rpc.sepolia.ethpandaops.io/`,
+			url: `https://rpc.holesky.ethpandaops.io/`,
       		accounts: DEPLOYER_PRIVATE_KEY,
 		},
 		ephemery: {
