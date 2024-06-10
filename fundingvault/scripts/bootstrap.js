@@ -18,6 +18,7 @@ async function main() {
     console.log("deploying FundingVaultProxy...")
     let Proxy = await ethers.getContractFactory("FundingVaultProxy");
     let proxy = await Proxy.connect(deployer).deploy();
+    await proxy.waitForDeployment();
     let proxyAddress = await proxy.getAddress();
     console.log("  success: " + proxyAddress);
 
@@ -25,6 +26,7 @@ async function main() {
     console.log("deploying FundingVaultToken...")
     let FundingVaultToken = await ethers.getContractFactory("FundingVaultToken");
     let token = await FundingVaultToken.deploy(proxyAddress);
+    await token.waitForDeployment();
     let tokenAddress = await token.getAddress();
     console.log("  success: " + tokenAddress);
 
@@ -32,6 +34,7 @@ async function main() {
     console.log("deploying FundingVaultV1...")
     let FundingVault = await ethers.getContractFactory("FundingVaultV1");
     let vault = await FundingVault.connect(deployer).deploy();
+    await vault.waitForDeployment();
     let vaultAddress = await vault.getAddress();
     console.log("  success: " + vaultAddress);
 
@@ -54,14 +57,12 @@ async function main() {
         console.log("changing FundingVault admin to: " + ownerAddress);
 
         console.log("calling grantRole & setProxyManager on FundingVault...");
-        await Promise.all([
-            proxiedVault.connect(deployer).grantRole(adminRole, ownerAddress, {
-                gasLimit: 60000,
-            }),
-            proxiedVault.connect(deployer).setProxyManager(ownerAddress, {
-                gasLimit: 40000,
-            }),
-        ]);
+        await proxiedVault.connect(deployer).grantRole(adminRole, ownerAddress, {
+            gasLimit: 60000,
+        });
+        await proxiedVault.connect(deployer).setProxyManager(ownerAddress, {
+            gasLimit: 40000,
+        });
         console.log("  success.");
 
         console.log("calling revokeRole on FundingVault...");
