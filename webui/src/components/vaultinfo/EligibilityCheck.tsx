@@ -40,7 +40,7 @@ const EligibilityCheck = (): React.ReactElement => {
   if(tokenBalance.data == 0) {
     return (
       <div>
-        Sorry, your wallet ({address}) is not authorized to request funds from the FundingVault.
+        Sorry, your wallet ({address}) is not authorized to request funds from the FundingVault. Have you <a href="https://github.com/ethpandaops/fundingvault/blob/master/README.md#applying-for-a-grant">applied for a grant</a> already? 
       </div>
     )
   }
