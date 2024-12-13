@@ -7,6 +7,7 @@
     "test": "hardhat test"
   },
   "devDependencies": {
+    "@nomicfoundation/edr": "^0.6.5",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.10",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@openzeppelin/contracts": "^4.9.5",
