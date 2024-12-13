@@ -1,6 +1,9 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-ignition");
 
+// import tasks
+require("./scripts/manager");
+
 const DEPLOYER_PRIVATE_KEY = vars.has("FUNDINGVAULT_DEPLOYER_PRIVATE_KEY") ? [ vars.get("FUNDINGVAULT_DEPLOYER_PRIVATE_KEY") ] : undefined;
 
 /** @type import('hardhat/config').HardhatUserConfig */
@@ -17,6 +20,11 @@ module.exports = {
 				auto: true,
 				interval: 0
 		  	}
+		},
+		anvil: {
+			chainId: 31337,
+			url: 'http://127.0.0.1:8545',
+			accounts: DEPLOYER_PRIVATE_KEY
 		},
 		sepolia: {
 			chainId: 11155111,
