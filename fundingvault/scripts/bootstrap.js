@@ -72,6 +72,27 @@ async function main() {
         console.log("  success.");
     }
 
+    const chainId = network.config.chainId;
+    saveDeployment(chainId, proxyAddress, tokenAddress, vaultAddress);
+}
+
+function saveDeployment(
+    chainId,
+    proxyAddr,
+    tokenAddr,
+    implAddr
+) {
+    const path = `deployment/${chainId}.json`;
+    const obj = {
+        "FundingVaultProxy": proxyAddr,
+        "FundingVaultToken": tokenAddr,
+        "FudingVaultV1": implAddr
+    };
+    fs.writeFileSync(
+        path,
+        JSON.stringify(obj),
+        "utf8"
+    );
 }
 
 main()

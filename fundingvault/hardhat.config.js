@@ -2,7 +2,8 @@ require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-ignition");
 
 // import tasks
-require("./scripts/manager");
+require("./scripts/tasks/manager");
+require('./scripts/tasks/owner');
 
 const DEPLOYER_PRIVATE_KEY = vars.has("FUNDINGVAULT_DEPLOYER_PRIVATE_KEY") ? [ vars.get("FUNDINGVAULT_DEPLOYER_PRIVATE_KEY") ] : undefined;
 
