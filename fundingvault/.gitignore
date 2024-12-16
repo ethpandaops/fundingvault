@@ -1,3 +1,5 @@
+**/*.env
+
 # Ignore local deployment logs
 deployment/1337.json
 deployment/31337.json

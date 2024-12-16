@@ -4,7 +4,7 @@ const fs = require('fs');
 
 
 /* bootstrap commands:
-npx hardhat vars set FUNDINGVAULT_DEPLOYER_PRIVATE_KEY
+npx hardhat vars set FUNDINGVAULT_OWNER_PRIVATE_KEY
 npx hardhat vars set FUNDINGVAULT_OWNER_ADDRESS
 npx hardhat run scripts/bootstrap.js --network ephemery
 */

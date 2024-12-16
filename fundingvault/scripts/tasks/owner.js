@@ -20,12 +20,12 @@ task("grant-role", "Grant specified role to account")
     if (args.managerRole == args.ownerRole) {
         throw new Error("Must provide either manager-role or owner-role only");
     } else if (args.managerRole) {
-        role = await vaultContract.GRANT_MANAGER_ROLE.staticcall();
+        role = await vaultContract.GRANT_MANAGER_ROLE();
     }
 
-    const txReceipt = await vaultContract.connect(ownerWallet).grantRole(role, args.account);
+    const tx = await vaultContract.connect(ownerWallet).grantRole(role, args.account);
 
-    console.log(`Granted ${args.account} with role ${role}. Tx: ${txReceipt.hash}`);
+    console.log(`Granted ${args.account} with role ${role}. Tx: ${tx.hash}`);
   })
 
 task("revoke-role", "Revoke specified role to account")
@@ -40,12 +40,12 @@ task("revoke-role", "Revoke specified role to account")
     if (args.managerRole == args.ownerRole) {
         throw new Error("Must provide either manager-role or owner-role only");
     } else if (args.managerRole) {
-        role = await vaultContract.GRANT_MANAGER_ROLE.staticcall();
+        role = await vaultContract.GRANT_MANAGER_ROLE();
     }
 
-    const txReceipt = await vaultContract.connect(ownerWallet).revokeRole(role, args.account);
+    const tx = await vaultContract.connect(ownerWallet).revokeRole(role, args.account);
 
-    console.log(`Revoked ${args.account} with role ${role}. Tx: ${txReceipt.hash}`);
+    console.log(`Revoked ${args.account} with role ${role}. Tx: ${tx.hash}`);
   })
 
 task('set-paused', "Enable/Disable claiming funds from the Vault")
@@ -61,9 +61,9 @@ task('set-paused', "Enable/Disable claiming funds from the Vault")
 
     const paused = args.pause ? args.pause : args.unpause;
 
-    const txReceipt = await vaultContract.connect(ownerWallet).setPaused(paused);
+    const tx = await vaultContract.connect(ownerWallet).setPaused(paused);
 
-    console.log(`Vault is paused: ${paused}. Tx: ${txReceipt.hash}`);
+    console.log(`Vault is paused: ${paused}. Tx: ${tx.hash}`);
   })
 
 task('set-claim-lock', "Set the number of seconds a claim gets locked for when the grant NFT gets transferred")
@@ -72,9 +72,9 @@ task('set-claim-lock', "Set the number of seconds a claim gets locked for when t
     const ownerWallet = getOwnerWallet();
     const vaultContract = getVaultInstance();
 
-    const txReceipt = await vaultContract.connect(ownerWallet).setClaimTransferLockTime(args.lockTime);
+    const tx = await vaultContract.connect(ownerWallet).setClaimTransferLockTime(args.lockTime);
 
-    console.log(`Claim transfer lock time has been updated. Tx: ${txReceipt.hash}`);
+    console.log(`Claim transfer lock time has been updated. Tx: ${tx.hash}`);
   })
 
 task('set-manager-limits', "Change the manager's grant limit in ETH per interval in seconds")
@@ -86,25 +86,49 @@ task('set-manager-limits', "Change the manager's grant limit in ETH per interval
     const ownerWallet = getOwnerWallet();
     const vaultContract = getVaultInstance();
 
-    const txReceipt = await vaultContract.connect(ownerWallet).setManagerGrantLimits(
+    const tx = await vaultContract.connect(ownerWallet).setManagerGrantLimits(
         args.amount,
         args.interval,
         args.cooldown,
         args.cooldownLock
     );
 
-    console.log(`Tx: ${txReceipt.hash}`);
+    console.log(`Tx: ${tx.hash}`);
   })
   
 task('set-proxy-manager', "Set account that is allowed to upgrade the contract")
   .addParam("account")
+  .addFlag("skipAdminCheck", "Pass this flag to skip check DEFAULT_ADMIN_ROLE for account")
   .setAction(async (args) => {
     const ownerWallet = getOwnerWallet();
     const vaultContract = getVaultInstance();
+    const defaultAdminRole = ethers.ZeroHash;
+    if (!args.skipAdminCheck) {
+      const accountHasDefaultAdmin = await vaultContract.hasRole(defaultAdminRole, args.account);
+      if (!accountHasDefaultAdmin) {
+        throw new Error(`Please grant ${args.account} with DEFAULT_ADMIN_ROLE first`);
+      }
+    }
 
-    const txReceipt = await vaultContract.connect(ownerWallet).setProxyManager(
+    const tx = await vaultContract.connect(ownerWallet).setProxyManager(
         args.account
     );
 
-    console.log(`Tx: ${txReceipt.hash}`);
+    console.log(`Tx: ${tx.hash}`);
+  })
+
+task('rescue-call', "Performs an emergency rescue call from the Vault")
+  .addParam("addr", "The address to call")
+  .addParam("amount", "Amount in wei to send to address")
+  .addParam("data", "The calldata to forward from the Vault")
+  .setAction(async (args) => {
+    const ownerWallet = getOwnerWallet();
+    const vaultContract = getVaultInstance();
+    const tx = await vaultContract.connect(ownerWallet).rescueCall(
+      args.addr,
+      args.amount,
+      args.data
+    );
+
+    console.log(`Tx: ${tx.hash}`);
   })
