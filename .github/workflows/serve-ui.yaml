@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./webui
+        working-directory: webui
     
     steps:
       - uses: actions/checkout@v3
@@ -22,6 +22,7 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
+          cache-dependency-path: ./webui/yarn.lock
 
       # Install dependencies
       - name: Install Dependencies
