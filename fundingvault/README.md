@@ -14,6 +14,10 @@ You may refer to the [Technical Concept](./docs/TechnicalConcept.md) documentati
 
 ---
 
+>
+> ℹ️ **Note**: Possible `network_name` is either `testnet` or `mainnet`.
+>
+
 ## Owner Operations
 
 Before perfoming any actions below, make sure to configure your keys by running:
@@ -34,9 +38,9 @@ Owners may perform the following operations:
 
 ### Contract Deployment
 
-Before running the deployment script, make sure you make the necessary changes to `vault.config.js` for your initialization configuration upon deployment of the Funding Vault contract. Otherwise, the default value will be used.
+Before running the deployment script, make sure you make the necessary changes to `vault.config.json` for your initialization configuration upon deployment of the Funding Vault contract. Otherwise, the default values will be used.
 
-Default Value:
+Default Values:
 ```javascript
 {   
     // (seconds) 10 minutes of lock time applied after a grant is created or transferred
