@@ -47,7 +47,14 @@ describe("Funding Vault Tests", function () {
 		let proxiedVault = FundingVault.attach(proxyAddress);
 
 		// Initialize vault thorugh proxy's upgradeToAndCall
-		const initData = vault.interface.encodeFunctionData("initialize(address)", [tokenAddress]);
+		const initData = vault.interface.encodeFunctionData("initialize(address,uint32,uint128,uint64,uint32,uint32)", [
+			tokenAddress,
+			600n, // claimTransferLockTime
+			100000n, // managerLimitAmount
+			2592000n, // managerLimitInterval
+			86400n, // managerLimitCooldown
+			43200n, // managerLimitCooldownLock
+		]);
 		await proxy.connect(owner).upgradeToAndCall(vaultAddress, initData);
 		return {proxy, token, vault, proxiedVault, owner};
 	}

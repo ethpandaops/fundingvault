@@ -73,7 +73,14 @@ contract FundingVaultV1 is
   receive() external payable {
   }
 
-  function initialize(address tokenAddr) public {
+  function initialize(
+    address tokenAddr,
+    uint32 claimTransferLockTime,
+    uint128 managerLimitAmount,
+    uint64 managerLimitInterval,
+    uint32 managerGrantCooldown,
+    uint32 managerGrantCooldownLock
+  ) public {
     require(tokenAddr != address(0), "tokenAddr must not be 0");
     require(_reentrancyStatus == 0 && _grantIdCounter == 0, "already initialized");
     require(_manager == _msgSender(), "access denied");
@@ -81,11 +88,11 @@ contract FundingVaultV1 is
     _reentrancyStatus = 1;
     _vaultTokenAddr = tokenAddr;
     _grantIdCounter = 1;
-    _claimTransferLockTime = 600;
-    _managerLimitAmount = 100000;
-    _managerLimitInterval = 2592000;
-    _managerGrantCooldown = 86400;
-    _managerGrantCooldownLock = 43200;
+    _claimTransferLockTime = claimTransferLockTime;
+    _managerLimitAmount = managerLimitAmount;
+    _managerLimitInterval = managerLimitInterval;
+    _managerGrantCooldown = managerGrantCooldown;
+    _managerGrantCooldownLock = managerGrantCooldownLock;
   }
 
 

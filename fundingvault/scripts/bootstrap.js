@@ -43,7 +43,15 @@ async function main() {
 
     // Initialize vault thorugh proxy's upgradeToAndCall
     console.log("calling upgradeToAndCall on FundingVaultProxy...")
-    const initData = vault.interface.encodeFunctionData("initialize(address)", [tokenAddress]);
+    const vaultConfig = readVaultConfig();
+    const initData = vault.interface.encodeFunctionData("initialize(address,uint32,uint128,uint64,uint32,uint32)", [
+        tokenAddress,
+        vaultConfig.claimTransferLockTime, // in seconds
+        vaultConfig.managerLimitAmount, // ETH
+        vaultConfig.managerLimitInterval, // in seconds
+        vaultConfig.managerLimitCooldown, // in seconds
+        vaultConfig.managerLimitCooldownLock // in seconds
+    ]);
     console.log("init data: " + initData)
     await proxy.connect(deployer).upgradeToAndCall(vaultAddress, initData, {
         gasLimit: 150000,
@@ -74,6 +82,12 @@ async function main() {
 
     const chainId = network.config.chainId;
     saveDeployment(chainId, proxyAddress, tokenAddress, vaultAddress);
+}
+
+function readVaultConfig() {
+    const path = 'vault.config.json';
+    const obj = JSON.parse(fs.readFileSync(path, 'utf8'));
+    return obj;
 }
 
 function saveDeployment(

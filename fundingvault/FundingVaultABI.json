@@ -662,6 +662,31 @@
                 "internalType": "address",
                 "name": "tokenAddr",
                 "type": "address"
+            },
+            {
+                "internalType": "uint32",
+                "name": "claimTransferLockTime",
+                "type": "uint32"
+            },
+            {
+                "internalType": "uint128",
+                "name": "managerLimitAmount",
+                "type": "uint128"
+            },
+            {
+                "internalType": "uint64",
+                "name": "managerLimitInterval",
+                "type": "uint64"
+            },
+            {
+                "internalType": "uint32",
+                "name": "managerGrantCooldown",
+                "type": "uint32"
+            },
+            {
+                "internalType": "uint32",
+                "name": "managerGrantCooldownLock",
+                "type": "uint32"
             }
         ],
         "name": "initialize",

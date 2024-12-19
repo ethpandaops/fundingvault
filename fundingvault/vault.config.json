@@ -1,0 +1,7 @@
+{
+    "claimTransferLockTime": 600,
+    "managerLimitAmount": 100000,
+    "managerLimitInterval": 2592000,
+    "managerLimitCooldown": 86400,
+    "managerLimitCooldownLock": 43200
+}

@@ -34,6 +34,26 @@ Owners may perform the following operations:
 
 ### Contract Deployment
 
+Before running the deployment script, make sure you make the necessary changes to `vault.config.js` for your initialization configuration upon deployment of the Funding Vault contract. Otherwise, the default value will be used.
+
+Default Value:
+```javascript
+{   
+    // (seconds) 10 minutes of lock time applied after a grant is created or transferred
+    "claimTransferLockTime": 600,
+    // (ETH) max of 100k ETH can be managed within
+    "managerLimitAmount": 100000,
+    // (seconds) per ~month
+    "managerLimitInterval": 2592000,
+    // (seconds) 24 hours increment to cooldownClock
+    "managerLimitCooldown": 86400,
+    // (seconds) 12 hours threshold
+    // Managers cannot create/update/transfer grants 
+    // if cooldownClock - now() >= managerLimitCooldownLock
+    "managerLimitCooldownLock": 43200
+}
+```
+
 ```bash
 npx hardhat run scripts/bootstrap.js --network <network-name>
 ```
