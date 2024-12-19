@@ -1,6 +1,5 @@
-import { type Chain } from 'viem'
-import { holesky, sepolia } from "wagmi/chains";
-//import { defineChain } from "viem";
+import { type Chain, defineChain } from 'viem'
+// import { anvil, holesky, sepolia } from "wagmi/chains";
 
 export interface ChainConfig {
 	VaultContractAddr: `0x${string}`;
@@ -18,39 +17,28 @@ export interface Config {
 	Chains: ChainConfig[];
 }
 
-/*
-const now = Math.floor((new Date()).getTime() / 1000);
-const iteration = Math.floor(((now - 1638471600) / 604800));
-export const ephemery = defineChain({
-	id: 39438000 + iteration,
-	name: 'Ephemery',
-	nativeCurrency: { name: 'Ephemery Ether', symbol: 'Eph', decimals: 18 },
+export const ata_testnet = defineChain({
+	id: 1398243,
+	name: 'Automata Testnet',
+	nativeCurrency: { name: 'Sepolia ATA', symbol: 'SepATA', decimals: 18 },
 	rpcUrls: {
-	  default: {
-		http: ['https://rpc.bordel.wtf/test', 'https://otter.bordel.wtf/erigon'],
-	  },
+		default: {
+			http: ['https://1rpc.io/ata/testnet']
+		}
 	},
-	blockExplorers: {
-	  default: {
-		name: 'Etherscan',
-		url: 'https://explorer.ephemery.dev/',
-		apiUrl: 'https://explorer.ephemery.dev/api',
-	  },
+	testnet: true
+});
+
+export const ata_mainnet = defineChain({
+	id: 65536,
+	name: 'Automata Mainnet',
+	nativeCurrency: { name: 'Automata', symbol: 'ATA', decimals: 18 },
+	rpcUrls: {
+		default: {
+			http: ['https://1rpc.io/ata']
+		}
 	},
-	contracts: {
-	  multicall3: {
-		address: '0x1195eDfF07CC259DF22EF34Ee8FFa7d6C5C0A128',
-		blockCreated: 1,
-	  },
-	  ensRegistry: { address: '0x902740a7Bc8279b1A3beBDf91cf9A016235E8859' },
-	  ensUniversalResolver: {
-		address: '0xc8Af999e38273D658BE1b921b88A9Ddf005769cC',
-		blockCreated: 1,
-	  },
-	},
-	testnet: true,
-})
-*/
+});
 
 const FundingVaultConfig: Config = {
 	AppVersion: process.env.REACT_APP_GIT_VERSION as string,
@@ -58,38 +46,26 @@ const FundingVaultConfig: Config = {
 	ManagerRole: "0xc7386e23c63a3088d7d0389761b7b890e58c103e1a12376eb26d3a4a04e2641b",
 	Chains: [
 		{
-			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
-			TokenContractAddr: "0x97652A83CC29043fA9Be2781cc0038EBa70de911",
-            TokenName: "HolETH",
-			Chain: holesky,
-			HumanNetworkName: "Holesky",
-			BlockExplorerUrl: "https://holesky.etherscan.io/",
+			VaultContractAddr: "0x74bBc82C68fc1e83BFA98cb9A2d6ef8241F46d28",
+			TokenContractAddr: "0x26540FCfd36262fbfb49Aa4eC6108B20595b796a",
+            TokenName: "SepATA",
+			Chain: ata_testnet,
+			HumanNetworkName: "Automata Testnet",
+			BlockExplorerUrl: "https://explorer-testnet.ata.network/",
 		},
-		{
-			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
-            TokenContractAddr: "0x97652A83CC29043fA9Be2781cc0038EBa70de911",
-            TokenName: "SepETH",
-			Chain: sepolia,
-			HumanNetworkName: "Sepolia",
-			BlockExplorerUrl: "https://sepolia.etherscan.io/",
-		},
-		/*
-		{
-			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
-            TokenContractAddr: "0x97652A83CC29043fA9Be2781cc0038EBa70de911",
-            TokenName: "EphETH",
-			Chain: ephemery,
-			HumanNetworkName: "Ephmery",
-			BlockExplorerUrl: "https://explorer.ephemery.dev/",
-		},
-		*/
+		// {
+		// 	VaultContractAddr: "",
+		// 	TokenContractAddr: "",
+        //     TokenName: "ATA",
+		// 	Chain: ata_mainnet,
+		// 	HumanNetworkName: "Automata Mainnet",
+		// 	BlockExplorerUrl: "https://explorer.ata.network/",
+		// }
 	],
 };
 
 export var KnownChains = [
-	holesky,
-    sepolia,
-    //ephemery,
+	ata_testnet,
 ];
 
 let CurrentConfig = FundingVaultConfig;

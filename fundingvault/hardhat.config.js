@@ -28,20 +28,30 @@ module.exports = {
 			url: 'http://127.0.0.1:8545',
 			accounts: DEPLOYER_PRIVATE_KEY
 		},
-		sepolia: {
-			chainId: 11155111,
-			url: `https://rpc.sepolia.ethpandaops.io/`,
-      		accounts: DEPLOYER_PRIVATE_KEY,
+		testnet: {
+			chainId: 1398243,
+			accounts: DEPLOYER_PRIVATE_KEY,
+			url: 'https://1rpc.io/ata/testnet'
 		},
-		holesky: {
-			chainId: 17000,
-			url: `https://rpc.holesky.ethpandaops.io/`,
-      		accounts: DEPLOYER_PRIVATE_KEY,
+		mainnet: {
+			chainId: 65536,
+			accounts: DEPLOYER_PRIVATE_KEY,
+			url: 'https://1rpc.io/ata'
 		},
-		ephemery: {
-			url: `https://otter.bordel.wtf/erigon`,
-      		accounts: DEPLOYER_PRIVATE_KEY,
-		},
+		// sepolia: {
+		// 	chainId: 11155111,
+		// 	url: `https://rpc.sepolia.ethpandaops.io/`,
+      	// 	accounts: DEPLOYER_PRIVATE_KEY,
+		// },
+		// holesky: {
+		// 	chainId: 17000,
+		// 	url: `https://rpc.holesky.ethpandaops.io/`,
+      	// 	accounts: DEPLOYER_PRIVATE_KEY,
+		// },
+		// ephemery: {
+		// 	url: `https://otter.bordel.wtf/erigon`,
+      	// 	accounts: DEPLOYER_PRIVATE_KEY,
+		// },
 	},
 	solidity: {
 		version: "0.8.21",
