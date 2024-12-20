@@ -96,11 +96,11 @@ npx hardhat grant-role --network <network-name> --account <account> --owner-role
 
 To grant `account` with `GRANT_MANAGER_ROLE`
 
-### Revoke Roles
-
 ```bash
 npx hardhat grant-role --network <network-name> --account <account> --manager-role
 ```
+
+### Revoke Roles
 
 To revoke `account` with `DEFAULT_ADMIN_ROLE`:
 
