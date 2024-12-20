@@ -13,7 +13,7 @@ import { KnownChains } from './config';
 
 const config = getDefaultConfig({
   appName: 'FundingVault',
-  projectId: '4b8923523ec77b9be8ab9fd4ff539b48',
+  projectId: 'eacf22cd196bfe746ffa0f7e9c275339',
   chains: KnownChains as any,
 });
 
