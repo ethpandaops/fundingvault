@@ -8,6 +8,20 @@ const {
 npx hardhat vars set FUNDINGVAULT_OWNER_PRIVATE_KEY
 */
 
+task("fund-vault", "Fund the Vault with tokens")
+  .addParam("amount", "Amount in ETH to fund the Vault")
+  .setAction(async (args) => {
+    const ownerWallet = getOwnerWallet();
+    const vaultContract = getVaultInstance();
+
+    const tx = await ownerWallet.sendTransaction({
+      to: await vaultContract.getAddress(),
+      value: ethers.parseEther(args.amount)
+    });
+
+    console.log(`Funded ${args.amount} ETH to the Vault. Tx: ${tx.hash}`);
+  })
+
 task("grant-role", "Grant specified role to account")
   .addFlag("managerRole", "Provide this flag to grant manager role")
   .addFlag("ownerRole", "Provide this flag to grant owner role")

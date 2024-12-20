@@ -80,7 +80,11 @@ npx hardhat run scripts/bootstrap.js --network <network-name>
 
 The deployment addresses will be written and stored at `/deployment/{chainId}.json`.
 
-After deploying the contracts, owners must ensure that `FundingVaultProxy` is funded. This can be done by simply sending tokens directly to the contract.
+After deploying the contracts, owners must ensure that `FundingVaultProxy` is funded. This can be done by simply sending tokens directly to the contract. Or by running the command below:
+
+```bash
+npx hardhat fund-vault --network <network-name> --amount <ETH>
+```
 
 ### Grant Roles
 
