@@ -2,7 +2,9 @@
 
 ## Prerequisite:
 
-Make sure you have installed the dependencies, before proceeding:
+Make sure you are on the current directly and have installed the dependencies, before proceeding:
+
+Run `$ pwd` to make sure you are on the `fundingvault/fundingvault` directory.
 
 ```bash
 npm install
@@ -13,6 +15,20 @@ Before deploying the FundingVault contracts to a network, please make sure that 
 You may refer to the [Technical Concept](./docs/TechnicalConcept.md) documentation to learm more about the available operations that can be performed on the Vault. 
 
 ---
+
+# Deployment
+
+Go to [`deployment`](./deployment/) to view all deployment addresses.
+
+|  | Network | Address |
+| --- | --- | --- |
+| `FundingVaultProxy` | Automata Testnet | [0x74bBc82C68fc1e83BFA98cb9A2d6ef8241F46d28](https://explorer-testnet.ata.network/address/0x74bBc82C68fc1e83BFA98cb9A2d6ef8241F46d28) |
+| `FundingVaultToken` | Automata Testnet | [0x26540FCfd36262fbfb49Aa4eC6108B20595b796a](https://explorer-testnet.ata.network/address/0x26540FCfd36262fbfb49Aa4eC6108B20595b796a) |
+| `FudingVaultV1` | Automata Testnet | [0x60607656b0DBc91e038587967E4a5e20B0e9809F](https://explorer-testnet.ata.network/address/0x60607656b0DBc91e038587967E4a5e20B0e9809F) |
+
+---
+
+# Running the CLI
 
 >
 > ℹ️ **Note**: Possible `network_name` is either `testnet` or `mainnet`.
@@ -63,6 +79,8 @@ npx hardhat run scripts/bootstrap.js --network <network-name>
 ```
 
 The deployment addresses will be written and stored at `/deployment/{chainId}.json`.
+
+After deploying the contracts, owners must ensure that `FundingVaultProxy` is funded. This can be done by simply sending tokens directly to the contract.
 
 ### Grant Roles
 
