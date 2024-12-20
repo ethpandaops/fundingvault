@@ -4,7 +4,7 @@
   "description": "Static web frontend for FundingVault contract",
   "author": "pk910",
   "license": "MIT",
-  "homepage": "https://automata-network.github.io/fundingvault/",
+  "homepage": "https://vault-testnet.automata.team/",
   "dependencies": {
     "@rainbow-me/rainbowkit": "^2.0.4",
     "@rainbow-me/rainbowkit-siwe-next-auth": "^0.4.0",
