@@ -4,7 +4,7 @@
   "description": "Static web frontend for FundingVault contract",
   "author": "pk910",
   "license": "MIT",
-  "homepage": "https://automata-network.github.io/fundingvault",
+  "homepage": "https://automata-network.github.io/fundingvault/webui",
   "dependencies": {
     "@rainbow-me/rainbowkit": "^2.0.4",
     "@rainbow-me/rainbowkit-siwe-next-auth": "^0.4.0",
@@ -36,7 +36,7 @@
   "scripts": {
     "dev": "react-scripts start",
     "start": "react-scripts start",
-    "build": "REACT_APP_GIT_VERSION=$(git rev-parse --short HEAD) react-scripts build",
+    "build": "REACT_APP_GIT_VERSION=$(git rev-parse --short HEAD) react-scripts build && cp walletconnect.txt build/walletconnect.txt",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@rainbow-me)/\"",
     "eject": "react-scripts eject"
   },
