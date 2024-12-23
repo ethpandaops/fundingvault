@@ -42,7 +42,15 @@ Default Values:
 }
 ```
 
-## Step 2: Role Assignments
+### Step 2: Fund the Vault
+
+After deploying the contracts, owners must ensure that `FundingVaultProxy` is funded. This can be done by simply sending tokens directly to the contract. Or by running the command below:
+
+```bash
+npx hardhat fund-vault --network <network-name> --amount <ETH>
+```
+
+## Step 3: Role Assignments
 
 Admins can grant and revoke accounts for:
 - `DEFAULT_ADMIN_ROLE` : role with the highest privilege
@@ -50,7 +58,7 @@ Admins can grant and revoke accounts for:
 
 Admins may also designate an account as a proxy manager, which is responsible for performing upgrades.
 
-## Step 3: Global Configurations
+## Step 4: Global Configurations
 
 Admins are responsible for configuring "limits" that are put in place for grant managers:
 
