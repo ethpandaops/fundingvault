@@ -74,6 +74,14 @@ Default Values:
 }
 ```
 
+If you intend to transfer owner of the Vault to a different address on deployment, you must set the `FUNDINGVAULT_OWNER_ADDRESS` variable before running `bootstrap.js`.
+
+```bash
+npx hardhat vars set FUNDINGVAULT_OWNER_ADDRESS
+```
+
+The command above ensures that the deployer will not retain `DEFAULT_ADMIN_ROLE` and all admin privileges are to transfer to `FUNDINGVAULT_OWNER_ADDRESS`.
+
 ```bash
 npx hardhat run scripts/bootstrap.js --network <network-name>
 ```
