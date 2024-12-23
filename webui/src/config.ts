@@ -53,19 +53,20 @@ const FundingVaultConfig: Config = {
 			HumanNetworkName: "Automata Testnet",
 			BlockExplorerUrl: "https://explorer-testnet.ata.network/",
 		},
-		// {
-		// 	VaultContractAddr: "",
-		// 	TokenContractAddr: "",
-        //     TokenName: "ATA",
-		// 	Chain: ata_mainnet,
-		// 	HumanNetworkName: "Automata Mainnet",
-		// 	BlockExplorerUrl: "https://explorer.ata.network/",
-		// }
+		{
+			VaultContractAddr: "0x92B59abfE96C9E4bEe808476dD0975a9b89b6c45",
+			TokenContractAddr: "0x8618395693B1e4BE231d29E338b2a1f9e645e56F",
+            TokenName: "ATA",
+			Chain: ata_mainnet,
+			HumanNetworkName: "Automata Mainnet",
+			BlockExplorerUrl: "https://explorer.ata.network/",
+		}
 	],
 };
 
 export var KnownChains = [
 	ata_testnet,
+	ata_mainnet
 ];
 
 let CurrentConfig = FundingVaultConfig;

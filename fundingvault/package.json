@@ -10,6 +10,7 @@
     "@nomicfoundation/edr": "^0.6.5",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.10",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.12",
     "@openzeppelin/contracts": "^4.9.5",
     "hardhat": "^2.22.5"
   }

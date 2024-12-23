@@ -23,8 +23,11 @@ Go to [`deployment`](./deployment/) to view all deployment addresses.
 |  | Network | Address |
 | --- | --- | --- |
 | `FundingVaultProxy` | Automata Testnet | [0x74bBc82C68fc1e83BFA98cb9A2d6ef8241F46d28](https://explorer-testnet.ata.network/address/0x74bBc82C68fc1e83BFA98cb9A2d6ef8241F46d28) |
+| | Automata Mainnet | [0x92B59abfE96C9E4bEe808476dD0975a9b89b6c45](https://explorer.ata.network/address/0x92B59abfE96C9E4bEe808476dD0975a9b89b6c45) |
 | `FundingVaultToken` | Automata Testnet | [0x26540FCfd36262fbfb49Aa4eC6108B20595b796a](https://explorer-testnet.ata.network/address/0x26540FCfd36262fbfb49Aa4eC6108B20595b796a) |
+| | Automata Mainnet | [0x8618395693B1e4BE231d29E338b2a1f9e645e56F](https://explorer.ata.network/address/0x8618395693B1e4BE231d29E338b2a1f9e645e56F) |
 | `FudingVaultV1` | Automata Testnet | [0x60607656b0DBc91e038587967E4a5e20B0e9809F](https://explorer-testnet.ata.network/address/0x60607656b0DBc91e038587967E4a5e20B0e9809F) |
+| | Automata Mainnet | [0x0E3Fe1a63E70aF7D4137172D8527912B5E11E02c](https://explorer.ata.network/address/0x0E3Fe1a63E70aF7D4137172D8527912B5E11E02c) |
 
 ---
 

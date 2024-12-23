@@ -1,5 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-ignition");
+require("@nomicfoundation/hardhat-verify");
 
 // import tasks
 require("./scripts/tasks/manager");
@@ -38,20 +39,6 @@ module.exports = {
 			accounts: DEPLOYER_PRIVATE_KEY,
 			url: 'https://1rpc.io/ata'
 		},
-		// sepolia: {
-		// 	chainId: 11155111,
-		// 	url: `https://rpc.sepolia.ethpandaops.io/`,
-      	// 	accounts: DEPLOYER_PRIVATE_KEY,
-		// },
-		// holesky: {
-		// 	chainId: 17000,
-		// 	url: `https://rpc.holesky.ethpandaops.io/`,
-      	// 	accounts: DEPLOYER_PRIVATE_KEY,
-		// },
-		// ephemery: {
-		// 	url: `https://otter.bordel.wtf/erigon`,
-      	// 	accounts: DEPLOYER_PRIVATE_KEY,
-		// },
 	},
 	solidity: {
 		version: "0.8.21",
@@ -62,4 +49,19 @@ module.exports = {
 			},
 		},
 	},
+	etherscan: {
+		apiKey: {
+		  mainnet: "verifyContract", // apiKey is not required, just set a placeholder
+		},
+		customChains: [
+		  {
+			network: "mainnet",
+			chainId: 65536,
+			urls: {
+			  apiURL: "https://api.routescan.io/v2/network/mainnet/evm/65536_2/etherscan",
+			  browserURL: "https://explorer.ata.network"
+			}
+		  }
+		]
+	  }
 };
