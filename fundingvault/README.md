@@ -50,6 +50,7 @@ Owners may perform the following operations:
 - Pause and unpause the vault contract.
 - Change the duration of lock time after a grant is created or transferred.
 - Change managers' limit on funds to be managed within a defined interval.
+    - Cooldown period on managers who exceeded their quota.
 - Perform rescue calls on a specified function.
 
 ### Contract Deployment
