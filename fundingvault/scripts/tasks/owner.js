@@ -133,15 +133,17 @@ task('set-proxy-manager', "Set account that is allowed to upgrade the contract")
 
 task('rescue-call', "Performs an emergency rescue call from the Vault")
   .addParam("addr", "The address to call")
-  .addParam("amount", "Amount in wei to send to address")
-  .addParam("data", "The calldata to forward from the Vault")
+  .addOptionalParam("amount", "Amount in wei to send to address")
+  .addOptionalParam("data", "The calldata to forward from the Vault")
   .setAction(async (args) => {
     const ownerWallet = getOwnerWallet();
     const vaultContract = getVaultInstance();
+    const amount = args.amount ? args.amount : 0;
+    const data = args.data ? args.data : "0x";
     const tx = await vaultContract.connect(ownerWallet).rescueCall(
       args.addr,
-      args.amount,
-      args.data
+      amount,
+      data
     );
 
     console.log(`Tx: ${tx.hash}`);

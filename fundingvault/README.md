@@ -171,6 +171,8 @@ npx hardhat set-manager-limits --network <network-name> --amount <ETH> --interva
 npx hardhat rescue-call --network <network-name> --addr <address> --amount <wei> --data <calldata-hexstring>
 ```
 
+Omit the `--data` argument to perform emergency fund withdrawals.
+
 ---
 
 ## Grant Manager Operations

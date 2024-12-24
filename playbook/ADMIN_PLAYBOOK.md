@@ -100,3 +100,9 @@ Using the same example as above, but now we set a cooldown lock of 43200 seconds
 - Alice can no longer create/update/transfer grants for 12 hours.
 
 - 12 hours later, even though Alice still has to "cooldown" for 12 more hours, she may now perform any actions that are allowable. However, the locking time now gets applied linearly following the rules above.
+
+## Step 5: Emergency Rescue Calls
+
+In the event of emergency, vault owners may perform arbitrary emergency calls from the Vault contract by invoking the `rescueCall()` method.
+
+This method can also be used to perform fund withdrawals from the Vault contract.
