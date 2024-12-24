@@ -86,7 +86,19 @@ After the transfer lock period has passed, the user should be able to claim the 
 >
 > **✅ Knowledge Check**:
 > 
-> TODO
+> The "allowance" set for a grant is limited by fixed amount of tokens that the recipient(s) can claim in a per interval basis, e.g. 100k ETH per month.
+>
+> The actual "claimable" amount is linearly proportional to the number of seconds from current time to a `claimTime`, a recorded timestamp when the recipient had previously interacted with the grant.
+>
+> For example, Alice claimed the full amount (60 ETH) of her grant, which entitled her to 60 ETH per hour. Ten minutes later, Alice now has a claimable balance of 10 ETH, because that is the amount that she is supposedly entitled to based on the duration from her previous interaction.
+>
+> Two things to note from the example above:
+>
+> - If Alice did not make a claim when her claimable balance has reached the maximum amount (60 ETH), the claimable balance would plateau and she will "miss out" on funds that would've been claimable. In other words, any inactivity with her grant beyond an hour would still entitle her to 60 ETH.
+>
+> - The full amount would be available to Alice upon creation (plus duration of transfer lock) of the grant. This is because the `claimTime` is recorded as the `creationTimestamp - interval`.
+>
+> After a grant is created, the NFT representing the grant is minted and transferred to the recipient. Any account holding the NFT would be eligible to claim funds for the grant. Minting and transferring of NFT would trigger a transfer lock, although claimable funds would still accumulate during the lock period.
 >
 
 ### Update Grant(s)
