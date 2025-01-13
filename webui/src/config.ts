@@ -1,6 +1,4 @@
-import { type Chain } from 'viem'
-import { holesky, sepolia } from "wagmi/chains";
-//import { defineChain } from "viem";
+import { type Chain, defineChain } from 'viem'
 
 export interface ChainConfig {
 	VaultContractAddr: `0x${string}`;
@@ -17,6 +15,68 @@ export interface Config {
 	ManagerRole: string;
 	Chains: ChainConfig[];
 }
+
+export const sepolia = /*#__PURE__*/ defineChain({
+	id: 11_155_111,
+	name: 'Sepolia',
+	nativeCurrency: { name: 'Sepolia Ether', symbol: 'SEP', decimals: 18 },
+	rpcUrls: {
+		default: {
+			http: ['https://rpc.sepolia.ethpandaops.io'],
+		},
+	},
+	blockExplorers: {
+		default: {
+			name: 'Etherscan',
+			url: 'https://sepolia.etherscan.io',
+			apiUrl: 'https://api-sepolia.etherscan.io/api',
+		},
+	},
+	contracts: {
+		multicall3: {
+			address: '0xca11bde05977b3631167028862be2a173976ca11',
+			blockCreated: 751532,
+		},
+		ensRegistry: { address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e' },
+		ensUniversalResolver: {
+			address: '0xc8Af999e38273D658BE1b921b88A9Ddf005769cC',
+			blockCreated: 5_317_080,
+		},
+	},
+	testnet: true,
+})
+
+export const holesky = /*#__PURE__*/ defineChain({
+	id: 17000,
+	name: 'Holesky',
+	nativeCurrency: { name: 'Holesky Ether', symbol: 'ETH', decimals: 18 },
+	rpcUrls: {
+		default: {
+			http: ['https://rpc.holesky.ethpandaops.io'],
+		},
+	},
+	blockExplorers: {
+		default: {
+			name: 'Etherscan',
+			url: 'https://holesky.etherscan.io',
+		},
+	},
+	contracts: {
+		multicall3: {
+			address: '0xca11bde05977b3631167028862be2a173976ca11',
+			blockCreated: 77,
+		},
+		ensRegistry: {
+			address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+			blockCreated: 801613,
+		},
+		ensUniversalResolver: {
+			address: '0xa6AC935D4971E3CD133b950aE053bECD16fE7f3b',
+			blockCreated: 973484,
+		},
+	},
+	testnet: true,
+})
 
 /*
 const now = Math.floor((new Date()).getTime() / 1000);
