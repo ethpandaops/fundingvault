@@ -21,7 +21,7 @@ export interface Config {
 const sepoliaWithCustomRPC = Object.assign({}, sepolia, {
 	rpcUrls: {
 		default: {
-			http: ['https://rpc.sepolia.ethpandaops.io'],
+			http: ['https://eth-sepolia.g.alchemy.com/v2/74gAuwdkOHanwiWJEl1sYb1rt-5XN3M0'],
 		},
 	},
 });
@@ -29,7 +29,7 @@ const sepoliaWithCustomRPC = Object.assign({}, sepolia, {
 const holeskyWithCustomRPC = Object.assign({}, holesky, {
 	rpcUrls: {
 		default: {
-			http: ['https://rpc.holesky.ethpandaops.io'],
+			http: ['https://eth-holesky.g.alchemy.com/v2/74gAuwdkOHanwiWJEl1sYb1rt-5XN3M0'],
 		},
 	},
 });
