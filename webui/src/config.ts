@@ -1,6 +1,6 @@
 import { type Chain } from 'viem'
 import { holesky, sepolia } from "wagmi/chains";
-//import { defineChain } from 'viem';
+import { defineChain } from 'viem';
 
 export interface ChainConfig {
 	VaultContractAddr: `0x${string}`;
@@ -68,11 +68,57 @@ export const ephemery = defineChain({
 })
 */
 
+export const hoodiWithCustomRPC = /*#__PURE__*/ defineChain({
+	id: 560048,
+	name: 'Hoodi',
+	nativeCurrency: { name: 'Hoodi Ether', symbol: 'ETH', decimals: 18 },
+	rpcUrls: {
+	  default: {
+		http: [
+			'https://rpc.hoodi.ethpandaops.io'
+		],
+	  },
+	},
+	blockExplorers: {
+	  default: {
+		name: 'Etherscan',
+		url: 'https://holesky.etherscan.io',
+	  },
+	},
+	
+	contracts: {
+	  /*
+	  multicall3: {
+		address: '0xca11bde05977b3631167028862be2a173976ca11',
+		blockCreated: 77,
+	  },
+	  ensRegistry: {
+		address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+		blockCreated: 801613,
+	  },
+	  ensUniversalResolver: {
+		address: '0xa6AC935D4971E3CD133b950aE053bECD16fE7f3b',
+		blockCreated: 973484,
+	  },
+	  */
+	},
+	
+	testnet: true,
+  })
+
 const FundingVaultConfig: Config = {
 	AppVersion: process.env.REACT_APP_GIT_VERSION as string,
 	AdminRole: "0x0000000000000000000000000000000000000000000000000000000000000000",
 	ManagerRole: "0xc7386e23c63a3088d7d0389761b7b890e58c103e1a12376eb26d3a4a04e2641b",
 	Chains: [
+		{
+			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
+			TokenContractAddr: "0x97652A83CC29043fA9Be2781cc0038EBa70de911",
+            TokenName: "HooETH",
+			Chain: hoodiWithCustomRPC,
+			HumanNetworkName: "Hoodi",
+			BlockExplorerUrl: "https://hoodi.etherscan.io/",
+		},
 		{
 			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
 			TokenContractAddr: "0x97652A83CC29043fA9Be2781cc0038EBa70de911",
@@ -104,6 +150,7 @@ const FundingVaultConfig: Config = {
 
 export var KnownChains = [
 	holeskyWithCustomRPC,
+	hoodiWithCustomRPC,
     sepoliaWithCustomRPC,
     //ephemery,
 ];
