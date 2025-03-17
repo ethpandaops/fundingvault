@@ -47,4 +47,19 @@ module.exports = {
 			},
 		},
 	},
+	etherscan: {
+		apiKey: {
+		  'hoodi': 'empty'
+		},
+		customChains: [
+			{
+				network: "hoodi",
+				chainId: 560048,
+				urls: {
+					apiURL: "https://hoodi.cloud.blockscout.com/api",
+					browserURL: "https://hoodi.cloud.blockscout.com"
+				}
+			}
+		]
+	},
 };
