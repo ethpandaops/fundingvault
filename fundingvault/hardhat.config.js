@@ -28,6 +28,11 @@ module.exports = {
 			url: `https://rpc.holesky.ethpandaops.io/`,
       		accounts: DEPLOYER_PRIVATE_KEY,
 		},
+		hoodi: {
+			chainId: 560048,
+			url: `https://rpc.hoodi.ethpandaops.io/`,
+      		accounts: DEPLOYER_PRIVATE_KEY,
+		},
 		ephemery: {
 			url: `https://otter.bordel.wtf/erigon`,
       		accounts: DEPLOYER_PRIVATE_KEY,
