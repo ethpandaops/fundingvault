@@ -117,7 +117,7 @@ const FundingVaultConfig: Config = {
             TokenName: "HooETH",
 			Chain: hoodiWithCustomRPC,
 			HumanNetworkName: "Hoodi",
-			BlockExplorerUrl: "https://hoodi.etherscan.io/",
+			BlockExplorerUrl: "https://hoodi.cloud.blockscout.com/",
 		},
 		{
 			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
