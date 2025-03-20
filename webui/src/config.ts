@@ -34,9 +34,8 @@ const holeskyWithCustomRPC = Object.assign({}, holesky, {
 	},
 });
 
-/*
 const now = Math.floor((new Date()).getTime() / 1000);
-const iteration = Math.floor(((now - 1638471600) / 604800));
+const iteration = Math.floor(((now - 1393527600) / 2419200));
 export const ephemery = defineChain({
 	id: 39438000 + iteration,
 	name: 'Ephemery',
@@ -66,7 +65,6 @@ export const ephemery = defineChain({
 	},
 	testnet: true,
 })
-*/
 
 export const hoodiWithCustomRPC = /*#__PURE__*/ defineChain({
 	id: 560048,
@@ -135,7 +133,6 @@ const FundingVaultConfig: Config = {
 			HumanNetworkName: "Sepolia",
 			BlockExplorerUrl: "https://sepolia.etherscan.io/",
 		},
-		/*
 		{
 			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
             TokenContractAddr: "0x97652A83CC29043fA9Be2781cc0038EBa70de911",
@@ -144,7 +141,6 @@ const FundingVaultConfig: Config = {
 			HumanNetworkName: "Ephmery",
 			BlockExplorerUrl: "https://explorer.ephemery.dev/",
 		},
-		*/
 	],
 };
 
@@ -152,7 +148,7 @@ export var KnownChains = [
 	holeskyWithCustomRPC,
 	hoodiWithCustomRPC,
     sepoliaWithCustomRPC,
-    //ephemery,
+    ephemery,
 ];
 
 let CurrentConfig = FundingVaultConfig;
