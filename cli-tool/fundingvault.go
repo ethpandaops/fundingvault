@@ -6,12 +6,14 @@ import (
 	"math"
 	"math/big"
 	"regexp"
+	"slices"
 	"strings"
 	"sync"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethpandaops/spamoor/spamoor"
 	"github.com/ethpandaops/spamoor/txbuilder"
 	"github.com/ethpandaops/spamoor/utils"
 	"github.com/holiman/uint256"
@@ -24,10 +26,8 @@ type FundingVault struct {
 	ctx           context.Context
 	cancel        context.CancelFunc
 	Config        *FundingVaultConfig
-	allClients    []*txbuilder.Client
-	goodClients   []*txbuilder.Client
 	Logger        *logrus.Logger
-	chainId       *big.Int
+	clientPool    *spamoor.ClientPool
 	txpool        *txbuilder.TxPool
 	rootWallet    *txbuilder.Wallet
 	vaultAddress  common.Address
@@ -45,8 +45,9 @@ func NewFundingVault(ctx context.Context, config *FundingVaultConfig, logger *lo
 }
 
 func (fv *FundingVault) Initialize() error {
-	// prepare clients
-	err := fv.prepareClients()
+	// init client pool
+	fv.clientPool = spamoor.NewClientPool(fv.ctx, fv.Config.RpcHosts, fv.Logger)
+	err := fv.clientPool.PrepareClients()
 	if err != nil {
 		return err
 	}
@@ -54,10 +55,14 @@ func (fv *FundingVault) Initialize() error {
 	// prepare txpool
 	fv.txpool = txbuilder.NewTxPool(&txbuilder.TxPoolOptions{
 		GetClientFn: func(index int, random bool) *txbuilder.Client {
-			return fv.GetClient(index, random)
+			mode := spamoor.SelectClientByIndex
+			if random {
+				mode = spamoor.SelectClientRandom
+			}
+			return fv.clientPool.GetClient(mode, index)
 		},
 		GetClientCountFn: func() int {
-			return len(fv.goodClients)
+			return len(fv.clientPool.GetAllGoodClients())
 		},
 	})
 
@@ -71,7 +76,7 @@ func (fv *FundingVault) Initialize() error {
 	}
 	fv.rootWallet = rootWallet
 
-	client := fv.GetClient(0, true)
+	client := fv.clientPool.GetClient(spamoor.SelectClientRandom, 0)
 	err = client.UpdateWallet(fv.ctx, fv.rootWallet)
 	if err != nil {
 		return err
@@ -186,6 +191,11 @@ func (fv *FundingVault) CheckAndRefillWallets(ctx context.Context, onSubmit func
 		return nil, err
 	}
 
+	err = fv.CheckRequests(ctx, requests)
+	if err != nil {
+		return nil, err
+	}
+
 	requests, err = fv.ExecuteFunding(ctx, requests, onSubmit)
 	if err != nil {
 		return nil, err
@@ -196,6 +206,7 @@ func (fv *FundingVault) CheckAndRefillWallets(ctx context.Context, onSubmit func
 
 type FundingRequest struct {
 	Address   common.Address
+	Priority  int
 	Balance   *big.Int
 	Request   *big.Int
 	MinAmount *big.Int
@@ -205,7 +216,7 @@ type FundingRequest struct {
 func (fv *FundingVault) CheckWallets(ctx context.Context) ([]FundingRequest, error) {
 	results := make([]FundingRequest, 0)
 
-	client := fv.GetClient(0, true)
+	client := fv.clientPool.GetClient(spamoor.SelectClientRandom, 0)
 	if client == nil {
 		return nil, fmt.Errorf("no client available")
 	}
@@ -244,6 +255,7 @@ func (fv *FundingVault) CheckWallets(ctx context.Context) ([]FundingRequest, err
 
 		results = append(results, FundingRequest{
 			Address:   fv.rootWallet.GetAddress(),
+			Priority:  fv.Config.RefillRootWallet.Priority,
 			Balance:   walletBalance,
 			Request:   refillAmount,
 			MinAmount: minBalance,
@@ -288,6 +300,7 @@ func (fv *FundingVault) CheckWallets(ctx context.Context) ([]FundingRequest, err
 
 		results = append(results, FundingRequest{
 			Address:   address,
+			Priority:  refillConfig.Priority,
 			Balance:   balance,
 			Request:   refillAmount,
 			MinAmount: minBalance,
@@ -295,6 +308,76 @@ func (fv *FundingVault) CheckWallets(ctx context.Context) ([]FundingRequest, err
 	}
 
 	return results, nil
+}
+
+func (fv *FundingVault) CheckRequests(ctx context.Context, requests []FundingRequest) error {
+	claimable, err := fv.GetClaimableBalance(ctx)
+	if err != nil {
+		return err
+	}
+
+	totalRequest := big.NewInt(0)
+	for _, request := range requests {
+		totalRequest.Add(totalRequest, request.Request)
+	}
+
+	if totalRequest.Cmp(claimable) > 0 {
+		// total request is greater than claimable balance
+		slices.SortFunc(requests, func(a, b FundingRequest) int {
+			return a.Priority - b.Priority
+		})
+
+		availableBalance := big.NewInt(0).Set(claimable)
+		priorityGroup := 0
+		priorityGroupBalance := big.NewInt(0)
+		priorityGroupRequests := []*FundingRequest{}
+		processPriorityGroup := func() {
+			defer func() {
+				priorityGroupBalance = big.NewInt(0)
+				priorityGroupRequests = []*FundingRequest{}
+			}()
+
+			if priorityGroupBalance.Cmp(big.NewInt(0)) == 0 || len(priorityGroupRequests) == 0 {
+				return
+			}
+
+			if priorityGroupBalance.Cmp(availableBalance) > 0 {
+				totalRequest := big.NewInt(0)
+				for _, request := range priorityGroupRequests {
+					request.Request.Div(request.Request, priorityGroupBalance)
+					request.Request.Mul(request.Request, availableBalance)
+					totalRequest.Add(totalRequest, request.Request)
+				}
+
+				if totalRequest.Cmp(availableBalance) > 0 {
+					// rounding issue, just deduct from last request
+					priorityGroupRequests[len(priorityGroupRequests)-1].Request.Sub(priorityGroupRequests[len(priorityGroupRequests)-1].Request, totalRequest)
+				}
+
+				availableBalance.SetUint64(0)
+			} else {
+				availableBalance.Sub(availableBalance, priorityGroupBalance)
+			}
+
+			availableBalance.Add(availableBalance, priorityGroupBalance)
+			priorityGroupBalance = big.NewInt(0)
+			priorityGroupRequests = []*FundingRequest{}
+		}
+
+		for _, request := range requests {
+			if request.Priority != priorityGroup {
+				processPriorityGroup()
+				priorityGroup = request.Priority
+			}
+
+			priorityGroupRequests = append(priorityGroupRequests, &request)
+			priorityGroupBalance.Add(priorityGroupBalance, request.Request)
+		}
+
+		processPriorityGroup()
+	}
+
+	return nil
 }
 
 func (fv *FundingVault) ExecuteFunding(ctx context.Context, requests []FundingRequest, onSubmit func(request FundingRequest, tx *types.Transaction)) ([]FundingRequest, error) {

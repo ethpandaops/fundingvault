@@ -10,6 +10,7 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethpandaops/spamoor/spamoor"
 	"github.com/ethpandaops/spamoor/txbuilder"
 	"github.com/holiman/uint256"
 	"github.com/sirupsen/logrus"
@@ -18,7 +19,7 @@ import (
 func (fv *FundingVault) ClaimAsync(ctx context.Context, amount *big.Int, onConfirm func(amount *big.Int, err error)) (*types.Transaction, error) {
 	rootWallet := fv.GetRootWallet()
 	vaultContract := fv.GetVaultContract()
-	tx, err := rootWallet.BuildBoundTx(&txbuilder.TxMetadata{
+	tx, err := rootWallet.BuildBoundTx(ctx, &txbuilder.TxMetadata{
 		GasFeeCap: uint256.MustFromBig(big.NewInt(int64(fv.Config.TxBaseFee * 1e9))),
 		GasTipCap: uint256.MustFromBig(big.NewInt(int64(fv.Config.TxTipFee * 1e9))),
 		Gas:       200000,
@@ -69,7 +70,7 @@ func (fv *FundingVault) ClaimSync(ctx context.Context, amount *big.Int, onSubmit
 func (fv *FundingVault) ClaimToAsync(ctx context.Context, toAddress common.Address, amount *big.Int, onConfirm func(amount *big.Int, err error)) (*types.Transaction, error) {
 	rootWallet := fv.GetRootWallet()
 	vaultContract := fv.GetVaultContract()
-	tx, err := rootWallet.BuildBoundTx(&txbuilder.TxMetadata{
+	tx, err := rootWallet.BuildBoundTx(ctx, &txbuilder.TxMetadata{
 		GasFeeCap: uint256.MustFromBig(big.NewInt(int64(fv.Config.TxBaseFee * 1e9))),
 		GasTipCap: uint256.MustFromBig(big.NewInt(int64(fv.Config.TxTipFee * 1e9))),
 		Gas:       200000,
@@ -118,13 +119,12 @@ func (fv *FundingVault) ClaimToSync(ctx context.Context, toAddress common.Addres
 }
 
 func (fv *FundingVault) sendClaimAsync(ctx context.Context, tx *types.Transaction, onConfirm func(amount *big.Int, err error)) error {
-	txPool := fv.GetTxPool()
 	txWg := sync.WaitGroup{}
 	txWg.Add(1)
 	txErr := error(nil)
 	txReceipt := (*types.Receipt)(nil)
-	err := txPool.SendTransaction(ctx, fv.GetRootWallet(), tx, &txbuilder.SendTransactionOptions{
-		Client:              fv.GetClient(0, false),
+	err := fv.txpool.SendTransaction(ctx, fv.GetRootWallet(), tx, &txbuilder.SendTransactionOptions{
+		Client:              fv.clientPool.GetClient(spamoor.SelectClientRandom, 0),
 		MaxRebroadcasts:     10,
 		RebroadcastInterval: 30 * time.Second,
 		OnConfirm: func(tx *types.Transaction, receipt *types.Receipt, err error) {
