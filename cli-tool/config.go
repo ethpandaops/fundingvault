@@ -23,6 +23,7 @@ type FundingVaultConfig struct {
 
 type FundingVaultRefillConfig struct {
 	Address      string `yaml:"address"`
+	Priority     int    `yaml:"priority"`
 	MinBalance   string `yaml:"minBalance"`
 	RefillAmount string `yaml:"refillAmount"`
 	RefillDelay  uint64 `yaml:"refillDelay"`

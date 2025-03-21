@@ -6,6 +6,7 @@ import (
 	"math"
 	"math/big"
 	"regexp"
+	"slices"
 	"strings"
 	"sync"
 
@@ -186,6 +187,11 @@ func (fv *FundingVault) CheckAndRefillWallets(ctx context.Context, onSubmit func
 		return nil, err
 	}
 
+	err = fv.CheckRequests(ctx, requests)
+	if err != nil {
+		return nil, err
+	}
+
 	requests, err = fv.ExecuteFunding(ctx, requests, onSubmit)
 	if err != nil {
 		return nil, err
@@ -196,6 +202,7 @@ func (fv *FundingVault) CheckAndRefillWallets(ctx context.Context, onSubmit func
 
 type FundingRequest struct {
 	Address   common.Address
+	Priority  int
 	Balance   *big.Int
 	Request   *big.Int
 	MinAmount *big.Int
@@ -244,6 +251,7 @@ func (fv *FundingVault) CheckWallets(ctx context.Context) ([]FundingRequest, err
 
 		results = append(results, FundingRequest{
 			Address:   fv.rootWallet.GetAddress(),
+			Priority:  fv.Config.RefillRootWallet.Priority,
 			Balance:   walletBalance,
 			Request:   refillAmount,
 			MinAmount: minBalance,
@@ -288,6 +296,7 @@ func (fv *FundingVault) CheckWallets(ctx context.Context) ([]FundingRequest, err
 
 		results = append(results, FundingRequest{
 			Address:   address,
+			Priority:  refillConfig.Priority,
 			Balance:   balance,
 			Request:   refillAmount,
 			MinAmount: minBalance,
@@ -295,6 +304,76 @@ func (fv *FundingVault) CheckWallets(ctx context.Context) ([]FundingRequest, err
 	}
 
 	return results, nil
+}
+
+func (fv *FundingVault) CheckRequests(ctx context.Context, requests []FundingRequest) error {
+	claimable, err := fv.GetClaimableBalance(ctx)
+	if err != nil {
+		return err
+	}
+
+	totalRequest := big.NewInt(0)
+	for _, request := range requests {
+		totalRequest.Add(totalRequest, request.Request)
+	}
+
+	if totalRequest.Cmp(claimable) > 0 {
+		// total request is greater than claimable balance
+		slices.SortFunc(requests, func(a, b FundingRequest) int {
+			return a.Priority - b.Priority
+		})
+
+		availableBalance := big.NewInt(0).Set(claimable)
+		priorityGroup := 0
+		priorityGroupBalance := big.NewInt(0)
+		priorityGroupRequests := []*FundingRequest{}
+		processPriorityGroup := func() {
+			defer func() {
+				priorityGroupBalance = big.NewInt(0)
+				priorityGroupRequests = []*FundingRequest{}
+			}()
+
+			if priorityGroupBalance.Cmp(big.NewInt(0)) == 0 || len(priorityGroupRequests) == 0 {
+				return
+			}
+
+			if priorityGroupBalance.Cmp(availableBalance) > 0 {
+				totalRequest := big.NewInt(0)
+				for _, request := range priorityGroupRequests {
+					request.Request.Div(request.Request, priorityGroupBalance)
+					request.Request.Mul(request.Request, availableBalance)
+					totalRequest.Add(totalRequest, request.Request)
+				}
+
+				if totalRequest.Cmp(availableBalance) > 0 {
+					// rounding issue, just deduct from last request
+					priorityGroupRequests[len(priorityGroupRequests)-1].Request.Sub(priorityGroupRequests[len(priorityGroupRequests)-1].Request, totalRequest)
+				}
+
+				availableBalance.SetUint64(0)
+			} else {
+				availableBalance.Sub(availableBalance, priorityGroupBalance)
+			}
+
+			availableBalance.Add(availableBalance, priorityGroupBalance)
+			priorityGroupBalance = big.NewInt(0)
+			priorityGroupRequests = []*FundingRequest{}
+		}
+
+		for _, request := range requests {
+			if request.Priority != priorityGroup {
+				processPriorityGroup()
+				priorityGroup = request.Priority
+			}
+
+			priorityGroupRequests = append(priorityGroupRequests, &request)
+			priorityGroupBalance.Add(priorityGroupBalance, request.Request)
+		}
+
+		processPriorityGroup()
+	}
+
+	return nil
 }
 
 func (fv *FundingVault) ExecuteFunding(ctx context.Context, requests []FundingRequest, onSubmit func(request FundingRequest, tx *types.Transaction)) ([]FundingRequest, error) {
