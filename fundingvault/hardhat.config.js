@@ -47,4 +47,22 @@ module.exports = {
 			},
 		},
 	},
+	etherscan: {
+		apiKey: {
+			hoodi: "noKey", // apiKey is not required, just set a placeholder
+		},
+		customChains: [
+			{
+				network: "hoodi",
+				chainId: 560048,
+				urls: {
+					apiURL: "https://api-hoodi.etherscan.io/api",
+					browserURL: "https://hoodi.etherscan.io"
+				}
+			}
+		]
+	},
+	sourcify: {
+		enabled: true
+	}
 };
