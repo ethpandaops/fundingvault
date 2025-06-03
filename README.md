@@ -1,6 +1,6 @@
 # Funding Vault
 
-Welcome to the repository for the Funding Vault contract, actively deployed on the [Holešovice](https://holesky.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) and [Sepolia](https://sepolia.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) Testnets. This project serves as a reliable source of testnet funds for smaller faucets and projects that require a steady influx of funds.
+Welcome to the repository for the Funding Vault contract, actively deployed on the [Holešovice](https://holesky.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c), [Sepolia](https://sepolia.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) and [Hoodi](https://hoodi.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) Testnets. This project serves as a reliable source of testnet funds for smaller faucets and projects that require a steady influx of funds.
 
 **Golden Rule**: Testnet funds may never be sold for profit or hoarded. They are public goods and should be utilized responsibly by entities with genuine needs.
 
