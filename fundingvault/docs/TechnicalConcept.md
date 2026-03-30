@@ -13,11 +13,11 @@ The fund request process is pull based. Funds can be requested from the FundingV
 ## Contracts
 
 The FundingVault consists of three contracts:
-* `FundingVaultProxy`  [0x610866c6089768dA95524bcc4cE7dB61eDa3931c](https://holesky.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c)
+* `FundingVaultProxy`  [0x610866c6089768dA95524bcc4cE7dB61eDa3931c](https://hoodi.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c)
 Proxy contract that holds Funds and serves as entrypoint for FundingVault calls.
-* `FundingVaultV1`  [0x93Af84598dda401de8c2ecC87052B8506E83D064](https://holesky.etherscan.io/address/0x93Af84598dda401de8c2ecC87052B8506E83D064)
+* `FundingVaultV1`  [0x93Af84598dda401de8c2ecC87052B8506E83D064](https://hoodi.etherscan.io/address/0x93Af84598dda401de8c2ecC87052B8506E83D064)
 Implementation of the FundingVault logic (V1).
-* `FundingVaultToken` [0x97652A83CC29043fA9Be2781cc0038EBa70de911](https://holesky.etherscan.io/address/0x97652A83CC29043fA9Be2781cc0038EBa70de911)
+* `FundingVaultToken` [0x97652A83CC29043fA9Be2781cc0038EBa70de911](https://hoodi.etherscan.io/address/0x97652A83CC29043fA9Be2781cc0038EBa70de911)
 Token contract that provides a ERC721 token which gives permission to claim the allowed funds from the vault.
 
 ## Upgradability

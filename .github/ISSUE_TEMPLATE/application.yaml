@@ -75,7 +75,6 @@ body:
       options:
         - Please Select
         - Sepolia
-        - Holesky
         - Hoodi
     validations:
       required: true

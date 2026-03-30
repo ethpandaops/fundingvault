@@ -1,5 +1,5 @@
 import { type Chain } from 'viem'
-import { holesky, sepolia } from "wagmi/chains";
+import { sepolia } from "wagmi/chains";
 import { defineChain } from 'viem';
 
 export interface ChainConfig {
@@ -22,14 +22,6 @@ const sepoliaWithCustomRPC = Object.assign({}, sepolia, {
 	rpcUrls: {
 		default: {
 			http: ['https://eth-sepolia.g.alchemy.com/v2/74gAuwdkOHanwiWJEl1sYb1rt-5XN3M0'],
-		},
-	},
-});
-
-const holeskyWithCustomRPC = Object.assign({}, holesky, {
-	rpcUrls: {
-		default: {
-			http: ['https://eth-holesky.g.alchemy.com/v2/74gAuwdkOHanwiWJEl1sYb1rt-5XN3M0'],
 		},
 	},
 });
@@ -82,7 +74,7 @@ export const hoodiWithCustomRPC = /*#__PURE__*/ defineChain({
 	blockExplorers: {
 	  default: {
 		name: 'Etherscan',
-		url: 'https://holesky.etherscan.io',
+		url: 'https://hoodi.etherscan.io',
 	  },
 	},
 	
@@ -121,14 +113,6 @@ const FundingVaultConfig: Config = {
 		},
 		{
 			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
-			TokenContractAddr: "0x97652A83CC29043fA9Be2781cc0038EBa70de911",
-            TokenName: "HolETH",
-			Chain: holeskyWithCustomRPC,
-			HumanNetworkName: "Holesky",
-			BlockExplorerUrl: "https://holesky.etherscan.io/",
-		},
-		{
-			VaultContractAddr: "0x610866c6089768dA95524bcc4cE7dB61eDa3931c",
             TokenContractAddr: "0x97652A83CC29043fA9Be2781cc0038EBa70de911",
             TokenName: "SepETH",
 			Chain: sepoliaWithCustomRPC,
@@ -149,7 +133,6 @@ const FundingVaultConfig: Config = {
 };
 
 export var KnownChains = [
-	holeskyWithCustomRPC,
 	hoodiWithCustomRPC,
     sepoliaWithCustomRPC,
     //ephemery,
