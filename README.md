@@ -1,6 +1,6 @@
 # Funding Vault
 
-Welcome to the repository for the Funding Vault contract, actively deployed on the [Holešovice](https://holesky.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c), [Sepolia](https://sepolia.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) and [Hoodi](https://hoodi.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) Testnets. This project serves as a reliable source of testnet funds for smaller faucets and projects that require a steady influx of funds.
+Welcome to the repository for the Funding Vault contract, actively deployed on the [Sepolia](https://sepolia.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) and [Hoodi](https://hoodi.etherscan.io/address/0x610866c6089768da95524bcc4ce7db61eda3931c) Testnets. This project serves as a reliable source of testnet funds for smaller faucets and projects that require a steady influx of funds.
 
 **Golden Rule**: Testnet funds may never be sold for profit or hoarded. They are public goods and should be utilized responsibly by entities with genuine needs.
 
@@ -30,7 +30,7 @@ Grants will continue as long as:
 - Funds are used appropriately.
 - Your project remains active.
 
-The grant is designed to last until the planned end of Sepolia in December 2026 and Holešovice in December 2028.
+The grant is designed to last until the planned end of Sepolia in December 2026.
 
 ## Programmatic Claims
 
@@ -50,7 +50,7 @@ Specifying an amount of `0` will trigger a payout of all available funds.
 The contract operates on a time-based system, allowing for both partial and full claims based on the accumulated available balance.
 
 - **Full Claims**: If you claim the full available amount, subsequent claims can be made within seconds, but only the funds that have accumulated since the last claim will be available.
-- **Partial Claims**: You can make a partial claim (e.g., 5k HolETH out of a 10k HolETH/month grant) if the available balance is sufficient. After a partial claim, the remaining balance continues to accumulate and can be claimed in subsequent calls.
+- **Partial Claims**: You can make a partial claim (e.g., 5k SepETH out of a 10k SepETH/month grant) if the available balance is sufficient. After a partial claim, the remaining balance continues to accumulate and can be claimed in subsequent calls.
 
 Grant holders should only claim the amounts of funds they actually need for immediate use and avoid hoarding funds for future use. Excessive accumulation without appropriate usage may prompt intervention to ensure fair resource distribution.
 

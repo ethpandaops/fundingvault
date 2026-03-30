@@ -37,7 +37,7 @@ const VaultInfo = (): React.ReactElement => {
   function renderInvalidNetwork() {
     return (
       <div className="">
-        Please switch to holesky or sepolia to continue.
+        Please switch to hoodi or sepolia to continue.
       </div>
     )
   }
