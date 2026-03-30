@@ -40,9 +40,19 @@ export function toReadableAmount(amount: number | bigint, decimals?: number, uni
   return amountStr + (unit ? " " + unit : "");
 }
 
+export const ONE_OFF_INTERVAL = 1576800000;
+
+export function isOneOffInterval(interval: number | bigint): boolean {
+  if(typeof interval === "bigint")
+    interval = Number(interval);
+  return interval >= ONE_OFF_INTERVAL;
+}
+
 export function toReadableDuration(duration: number | bigint, maxParts?: number): string {
   if(typeof duration === "bigint")
     duration = Number(duration);
+  if(isOneOffInterval(duration))
+    return "one-off";
   if(typeof maxParts != "number")
     maxParts = 0;
   let res = "";

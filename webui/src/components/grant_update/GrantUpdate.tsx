@@ -7,7 +7,7 @@ import { ConfigForChainId } from "../../utils/chaincfg";
 import FundingVaultAbi from "../../abi/FundingVault.json";
 import { useState } from "react";
 import { Modal } from 'react-bootstrap';
-import { toReadableAmount, toReadableDuration } from "../../utils/ConvertHelpers";
+import { ONE_OFF_INTERVAL, toReadableAmount, toReadableDuration } from "../../utils/ConvertHelpers";
 
 const GrantRename = (props: { grantId: number, name: string, amount: number, interval: number, closeFn?: () => void }): React.ReactElement => {
   const { address, chain } = useAccount();
@@ -18,6 +18,7 @@ const GrantRename = (props: { grantId: number, name: string, amount: number, int
   const updateRequest = useWriteContract();
 
   let intervalOptions = [
+    { value: ONE_OFF_INTERVAL, title: "one-off" },
     { value: 86400, title: "1 day" },
     { value: 604800, title: "1 week" },
     { value: 1209600, title: "2 weeks" },

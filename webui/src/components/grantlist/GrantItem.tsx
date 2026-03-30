@@ -7,7 +7,7 @@ import { ConfigForChainId } from "../../utils/chaincfg";
 import FundingVaultAbi from "../../abi/FundingVault.json";
 import VaultTokenAbi from "../../abi/VaultToken.json";
 import { useEffect } from "react";
-import { toReadableAmount, toReadableDuration } from "../../utils/ConvertHelpers";
+import { isOneOffInterval, toReadableAmount, toReadableDuration } from "../../utils/ConvertHelpers";
 import GrantRename from "../grant_rename/GrantRename";
 import GrantUpdate from "../grant_update/GrantUpdate";
 import GrantLock from "../grant_lock/GrantLock";
@@ -121,7 +121,7 @@ const GrantItem = (props: IGrantItemProps): React.ReactElement => {
         </a>
       </td>
       <td>
-        {toReadableAmount(props.grant.claimLimit as bigint, 0, chainConfig.TokenName, 0)} / {toReadableDuration(props.grant.claimInterval)}
+        {toReadableAmount(props.grant.claimLimit as bigint, 0, chainConfig.TokenName, 0)} {isOneOffInterval(props.grant.claimInterval) ? "(one-off)" : "/ " + toReadableDuration(props.grant.claimInterval)}
         <a href="#" className="grant-edit-btn" onClick={(evt) => {
           evt.preventDefault();
           if(!tokenIdCall.isFetched)
