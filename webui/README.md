@@ -1,6 +1,6 @@
 # FundingVault Web UI
 
-This Web UI provides a simple interface to claim funds from the FundingVault on Holesky & Sepolia.
+This Web UI provides a simple interface to claim funds from the FundingVault on Hoodi & Sepolia.
 
 ## Startup
 `npm run start`
