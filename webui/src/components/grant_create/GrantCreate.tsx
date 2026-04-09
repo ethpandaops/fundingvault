@@ -8,6 +8,7 @@ import FundingVaultAbi from "../../abi/FundingVault.json";
 import { useState } from "react";
 import { Modal } from 'react-bootstrap';
 import { isAddress } from "ethers";
+import { ONE_OFF_INTERVAL } from "../../utils/ConvertHelpers";
 
 function toHex(str) {
   var result = '';
@@ -27,11 +28,12 @@ const GrantCreate = (props: { closeFn?: () => void }): React.ReactElement => {
   let [nameInput, setNameInput] = useState("");
   let [addressInput, setAddressInput] = useState("");
   let [amountInput, setAmountInput] = useState(10000);
-  let [intervalInput, setIntervalInput] = useState(2592000);
-  
+  let [intervalInput, setIntervalInput] = useState(ONE_OFF_INTERVAL);
+
   const createRequest = useWriteContract();
 
   let intervalOptions = [
+    { value: ONE_OFF_INTERVAL, title: "one-off" },
     { value: 86400, title: "1 day" },
     { value: 604800, title: "1 week" },
     { value: 1209600, title: "2 weeks" },

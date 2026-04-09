@@ -7,7 +7,7 @@ import { ConfigForChainId } from "../../utils/chaincfg";
 
 import FundingVaultAbi from "../../abi/FundingVault.json";
 import { useEffect, useState } from "react";
-import { toBigintUnit, toDecimalUnit, toReadableAmount, toReadableDuration } from "../../utils/ConvertHelpers";
+import { isOneOffInterval, toBigintUnit, toDecimalUnit, toReadableAmount, toReadableDuration } from "../../utils/ConvertHelpers";
 import { isAddress } from "ethers";
 
 import "./ClaimForm.css"
@@ -79,7 +79,7 @@ const ClaimForm = (props: { grantId: number }): React.ReactElement => {
           {grantDetails.data ?
           <tr>
             <td className="prop">Your allowance:</td>
-            <td className="value">{toReadableAmount((grantDetails.data as IGrantDetails)?.claimLimit, 0, chainConfig.TokenName, 0)} per {toReadableDuration((grantDetails.data as IGrantDetails)?.claimInterval)}</td>
+            <td className="value">{toReadableAmount((grantDetails.data as IGrantDetails)?.claimLimit, 0, chainConfig.TokenName, 0)} {isOneOffInterval((grantDetails.data as IGrantDetails)?.claimInterval) ? "(one-off)" : "per " + toReadableDuration((grantDetails.data as IGrantDetails)?.claimInterval)}</td>
           </tr>
           : null}
         </tbody>
