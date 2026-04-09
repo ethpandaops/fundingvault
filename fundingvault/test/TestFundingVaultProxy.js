@@ -546,8 +546,8 @@ describe("Funding Vault Tests", function () {
 				const granteeAddress = await grantee.getAddress();
 
 				// Generate random values for grant and claim
-				const randomGrant = Math.floor(Math.random() * 1000);
-				const randomTime = Math.floor(Math.random() * 3600);
+				const randomGrant = Math.floor(Math.random() * 1000) + 1;
+				const randomTime = Math.floor(Math.random() * 3600) + 1;
 
 				if (debug) {
 					console.log(`Test ${i + 1}: Grantee = ${granteeAddress}, Grant = ${randomGrant}, Time = ${randomTime}`);
