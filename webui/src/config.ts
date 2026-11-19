@@ -21,7 +21,7 @@ export interface Config {
 const sepoliaWithCustomRPC = Object.assign({}, sepolia, {
 	rpcUrls: {
 		default: {
-			http: ['https://eth-sepolia.g.alchemy.com/v2/74gAuwdkOHanwiWJEl1sYb1rt-5XN3M0'],
+			http: ['https://rpc.sepolia.ethpandaops.io'],
 		},
 	},
 });
